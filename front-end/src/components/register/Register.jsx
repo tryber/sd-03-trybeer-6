@@ -57,53 +57,56 @@ export default function Register() {
   };
 
   return (
-    <form>
-      <label htmlFor="name">
-        Nome
-        <input
-          type="text"
-          name="name"
-          data-testid="signup-name"
-          onBlur={ (e) => nameValidator(e) }
-        />
-        {nameError ? <p>{nameError}</p> : null}
-      </label>
-      <label htmlFor="email">
-        Email
-        <input
-          type="text"
-          name="email"
-          data-testid="signup-email"
-          onBlur={ (e) => emailValidator(e) }
-        />
-        {emailError ? <p>{emailError}</p> : null}
-      </label>
-      <label htmlFor="senha">
-        Senha
-        <input
-          type="password"
-          name="senha"
-          data-testid="signup-password"
-          onBlur={ (e) => passwordValidator(e) }
-        />
-        {passwordError ? <p>{passwordError}</p> : null}
-      </label>
-      <label htmlFor="seller">
-        Quero vender
-        <input
-          type="checkbox"
-          name="seller"
-          data-testid="signup-seller"
-          onChange={ () => setIsAdmin(!isAdmin) }
-        />
-      </label>
-      <button
-        type="button"
-        data-testid="signup-btn"
-        disabled={ !name || !email || !password || emailError || passwordError || nameError }
-      >
-        CADASTRAR
-      </button>
-    </form>
+    <div>
+      <h1>Tela de cadastro de usuário</h1>
+      <form>
+        <label htmlFor="name">
+          Nome
+          <input
+            type="text"
+            name="name"
+            data-testid="signup-name"
+            onBlur={ (e) => nameValidator(e) }
+          />
+          {nameError ? <p data-testid="nomeError">{nameError}</p> : null}
+        </label>
+        <label htmlFor="email">
+          Email
+          <input
+            type="text"
+            name="email"
+            data-testid="signup-email"
+            onBlur={ (e) => emailValidator(e) }
+          />
+          {emailError ? <p>{emailError}</p> : null}
+        </label>
+        <label htmlFor="senha">
+          Senha
+          <input
+            type="password"
+            name="senha"
+            data-testid="signup-password"
+            onBlur={ (e) => passwordValidator(e) }
+          />
+          {passwordError ? <p>{passwordError}</p> : null}
+        </label>
+        <label htmlFor="seller">
+          Quero vender
+          <input
+            type="checkbox"
+            name="seller"
+            data-testid="signup-seller"
+            onChange={ () => setIsAdmin(!isAdmin) }
+          />
+        </label>
+        <button
+          type="button"
+          data-testid="signup-btn"
+          disabled={ !name || !email || !password || emailError || passwordError || nameError }
+        >
+          CADASTRAR
+        </button>
+      </form>
+    </div>
   );
 }
