@@ -37,7 +37,7 @@ export default function Login() {
   return (
     <form>
       <label htmlFor="email-input">
-        E-mail:
+        Email:
         <input
           type="text"
           name="email-input"
@@ -47,7 +47,7 @@ export default function Login() {
         {emailError ? <p>{emailError}</p> : null}
       </label>
       <label htmlFor="password-input">
-        Senha:
+        Password:
         <input
           type="password"
           name="password-input"
@@ -62,7 +62,7 @@ export default function Login() {
         data-testid="signin-btn"
         disabled={ !email || !password || emailError || passwordError }
       >
-        Entrar
+        ENTRAR
       </button>
       <Link to="/register" name="no-account-btn" data-testid="no-account-btn">
         Ainda não tenho conta
