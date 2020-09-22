@@ -1,5 +1,5 @@
-function error(error, req, res, next) {
+function errormid(error, _req, res, _next) {
   return res.status(404).json(error);
 }
 
-module.exports = error;
+module.exports = errormid;
