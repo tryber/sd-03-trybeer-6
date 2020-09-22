@@ -43,10 +43,10 @@ export default function Register() {
     const {
       target: { value: typedName },
     } = e;
-    const nameRegex = /[^A-Za-z]/;
+    const nameRegex = /[\^$.|?*@+()#!%¨&0-9]/;
     const magicNumber = 12;
 
-    if (!nameRegex.test(typedName) || typedName.length < magicNumber) {
+    if (nameRegex.test(typedName) || typedName.length < magicNumber) {
       return setNameError(
         'Você digitou um caracter especial ou número no nome ou digitou um nome menor que 12 letras.',
       );

@@ -3,13 +3,13 @@ import { Route, Switch } from 'react-router-dom';
 
 import './App.css';
 import Login from './components/login/Login';
+import Register from './components/register/Register';
 
-const App = () => {
-  return (
-    <Switch>
-      <Route exact path="/login" component={ Login } />
-    </Switch>
-  )
-}
+const App = () => (
+  <Switch>
+    <Route path="/login" component={ Login } />
+    <Route path="/register" component={ Register } />
+  </Switch>
+);
 
 export default App;
