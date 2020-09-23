@@ -9,6 +9,9 @@ const App = () => (
   <Switch>
     <Route path="/login" component={ Login } />
     <Route path="/register" component={ Register } />
+    <Route path="/products" component={ () => <div>Products Page</div> } />
+    <Route path="/admin/orders" component={ () => <div>Admin Orders Page</div> } />
+    <Route exact path="/" component={ Login } />
   </Switch>
 );
 

@@ -1,13 +1,29 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import NewRegisterUser from '../../utils/axios/RegisterUser';
 
 export default function Register() {
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
   const [nameError, setNameError] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [registerError, setRegisterError] = useState(null);
+  const history = useHistory();
+  const mgNumber = 6;
+
+  const registerUser = async () => {
+    const registerAnsw = await NewRegisterUser(name, email, password, isAdmin);
+    const statusErr = 404;
+
+    if (registerAnsw === statusErr) return setRegisterError(registerAnsw);
+    if (registerAnsw.user.role) return history.push('/admin/orders');
+    if (!registerAnsw.user.role) return history.push('/products');
+
+    return null;
+  };
 
   const emailValidator = (e) => {
     const {
@@ -59,6 +75,7 @@ export default function Register() {
   return (
     <div>
       <h1>Tela de cadastro de usuário</h1>
+      <div>{registerError ? <p>E-mail already in database.</p> : null}</div>
       <form>
         <label htmlFor="name">
           Nome
@@ -81,17 +98,18 @@ export default function Register() {
           {emailError ? <p>{emailError}</p> : null}
         </label>
         <label htmlFor="senha">
-          Senha
+          Password
           <input
             type="password"
             name="senha"
             data-testid="signup-password"
             onBlur={ (e) => passwordValidator(e) }
+            onChange={ (e) => setPassword(e.target.value) }
           />
           {passwordError ? <p>{passwordError}</p> : null}
         </label>
         <label htmlFor="seller">
-          Quero vender
+          Quero Vender
           <input
             type="checkbox"
             name="seller"
@@ -102,9 +120,18 @@ export default function Register() {
         <button
           type="button"
           data-testid="signup-btn"
-          disabled={ !name || !email || !password || emailError || passwordError || nameError }
+          disabled={
+            !name
+            || !email
+            || !password
+            || emailError
+            || passwordError
+            || nameError
+            || password.length < mgNumber
+          }
+          onClick={ () => registerUser() }
         >
-          CADASTRAR
+          Cadastrar
         </button>
       </form>
     </div>
