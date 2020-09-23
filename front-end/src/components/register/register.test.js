@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup } from '@testing-library/react';
+import { cleanup, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
 import renderWithRouter from '../../utils';
@@ -132,7 +132,7 @@ describe('Testes de validação de formulário do campo email', () => {
     });
 
     const inputEmail = getByLabelText('Email');
-    const inputPassword = getByLabelText('Senha');
+    const inputPassword = getByLabelText('Password');
 
     expect(inputEmail).toBeInTheDocument();
     expect(inputPassword).toBeInTheDocument();
@@ -155,7 +155,7 @@ describe('Testes de validação de formulário do campo email', () => {
     });
 
     const inputEmail = getByLabelText('Email');
-    const inputPassword = getByLabelText('Senha');
+    const inputPassword = getByLabelText('Password');
 
     expect(inputEmail).toBeInTheDocument();
     expect(inputPassword).toBeInTheDocument();
@@ -182,8 +182,8 @@ describe('Verifica validação de formulário no campo senha', () => {
       route,
     });
 
-    const inputPassword = getByLabelText('Senha');
-    const checkBox = getByLabelText('Quero vender');
+    const inputPassword = getByLabelText('Password');
+    const checkBox = getByLabelText('Quero Vender');
 
     expect(inputPassword).toBeInTheDocument();
     expect(checkBox).toBeInTheDocument();
@@ -205,8 +205,8 @@ describe('Verifica validação de formulário no campo senha', () => {
       route,
     });
 
-    const inputPassword = getByLabelText('Senha');
-    const checkBox = getByLabelText('Quero vender');
+    const inputPassword = getByLabelText('Password');
+    const checkBox = getByLabelText('Quero Vender');
 
     expect(inputPassword).toBeInTheDocument();
     expect(checkBox).toBeInTheDocument();
@@ -230,7 +230,7 @@ describe('Verifica se o botão está desabilitado com dados inválidos e válido
     const btnCadastrar = getByRole('button', /cadastrar/i);
     const inputName = getByLabelText('Nome');
     const inputEmail = getByLabelText('Email');
-    const inputPassword = getByLabelText('Senha');
+    const inputPassword = getByLabelText('Password');
 
     expect(btnCadastrar).toBeInTheDocument();
     expect(inputName).toBeInTheDocument();
@@ -253,7 +253,7 @@ describe('Verifica se o botão está desabilitado com dados inválidos e válido
     const btnCadastrar = getByRole('button', /cadastrar/i);
     const inputName = getByLabelText('Nome');
     const inputEmail = getByLabelText('Email');
-    const inputPassword = getByLabelText('Senha');
+    const inputPassword = getByLabelText('Password');
 
     expect(btnCadastrar).toBeInTheDocument();
     expect(inputName).toBeInTheDocument();
@@ -270,4 +270,36 @@ describe('Verifica se o botão está desabilitado com dados inválidos e válido
 
     expect(btnCadastrar).not.toHaveAttribute('disabled');
   });
+});
+
+describe('Verifica redirecionamento da rota ao cadastrar usuário com sucesso', () => {
+  it.todo('Verifica rota ao cadastrar usuário comum', () => {
+    const { getByRole, getByLabelText, history } = renderWithRouter(component, { route });
+    const inputName = getByLabelText('Nome');
+    const inputEmail = getByLabelText('Email');
+    const inputPassword = getByLabelText('Password');
+    const btnCadastrar = getByRole('button', /cadastrar/i);
+
+    inputName.focus();
+    userEvent.type(inputName, 'Fulano Ciclano Beltrano da Silva');
+    userEvent.tab();
+    userEvent.type(inputEmail, 'email@email.com');
+    userEvent.tab();
+    userEvent.type(inputPassword, 'abc12345');
+    userEvent.tab();
+
+    expect(inputName).toHaveValue('Fulano Ciclano Beltrano da Silva');
+    expect(inputEmail).toHaveValue('email@email.com');
+    expect(inputPassword).toHaveValue('abc12345');
+    expect(btnCadastrar).toBeInTheDocument();
+    expect(btnCadastrar).not.toHaveAttribute('disabled');
+
+    fireEvent.click(btnCadastrar);
+
+    const correctRoute = '/products';
+    const newPath = history.location.pathname;
+    expect(newPath).toBe(correctRoute);
+  });
+
+  it.todo('Verifica rota ao cadastrar usuário administrador');
 });
