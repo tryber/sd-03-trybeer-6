@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 // import PropTypes from 'prop-types';
+import history from 'history/browser';
 import { Link } from 'react-router-dom';
 import './styles.css';
 
@@ -17,7 +18,7 @@ const loginRequest = async (email, password, message) => {
     //   email,
     //   password
     // });
-  message('Email ou senha invalidos!');
+  history.push('/home');
 };
 
 const InputTypes = ({ type, handleChanger }) => (

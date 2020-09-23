@@ -2,7 +2,7 @@ import React from 'react';
 // import { cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
-import renderWithRouter from '../../utils/index';
+import renderWithRouter from '../../utils';
 import Login from './index';
 
 const route = '/login';
