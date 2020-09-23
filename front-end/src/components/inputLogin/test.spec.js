@@ -2,7 +2,7 @@ import React from 'react';
 // import { cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
-import renderWithRouter from '../../utils';
+import renderWithRouter from '../../utils/index';
 import Login from './index';
 
 const route = '/login';
@@ -42,6 +42,7 @@ describe('Validação do componente/rota Login', () => {
     userEvent.click(newAccountBtn);
 
     const mainRoute = history.location.pathname;
+
     expect(mainRoute).toBe('/register');
   });
 
