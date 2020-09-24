@@ -1,5 +1,7 @@
 import React from 'react';
-import { cleanup } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
+import { cleanup, act } from '@testing-library/react';
+// import MutationObserver from 'mutationobserver-shim';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
 import renderWithRouter from '../../utils';
@@ -273,13 +275,12 @@ describe('Verifica se o botão está desabilitado com dados inválidos e válido
 });
 
 describe('Verifica redirecionamento da rota ao cadastrar usuário com sucesso', () => {
-  it('Verifica rota ao cadastrar usuário comum', () => {
+  it('Verifica rota ao cadastrar usuário comum', async () => {
     const { getByRole, getByLabelText, history } = renderWithRouter(component, { route });
     const inputName = getByLabelText('Nome');
     const inputEmail = getByLabelText('Email');
     const inputPassword = getByLabelText('Password');
     const btnCadastrar = getByRole('button', /cadastrar/i);
-    const onClick = jest.fn();
 
     inputName.focus();
     userEvent.type(inputName, 'Fulano Ciclano Beltrano da Silva');
@@ -295,11 +296,10 @@ describe('Verifica redirecionamento da rota ao cadastrar usuário com sucesso', 
     expect(btnCadastrar).toBeInTheDocument();
     expect(btnCadastrar).not.toHaveAttribute('disabled');
 
-    userEvent.click(btnCadastrar);
-    expect(onClick).toHaveBeenCalled();
-
-    const newPath = history.location.pathname;
-    expect(newPath).toBe('/products');
+    await act(async () => {
+      userEvent.click(btnCadastrar);
+      await waitFor(() => expect(history.location.pathname).toBe('/products'));
+    });
   });
 
   it.todo('Verifica rota ao cadastrar usuário administrador');

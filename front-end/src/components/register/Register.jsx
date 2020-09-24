@@ -20,9 +20,7 @@ export default function Register() {
 
     if (registerAnsw === statusErr) return setRegisterError(registerAnsw);
     if (registerAnsw.user.role) return history.push('/admin/orders');
-    if (!registerAnsw.user.role) return history.push('/products');
-
-    return null;
+    return history.push('/products');
   };
 
   const emailValidator = (e) => {
@@ -129,7 +127,7 @@ export default function Register() {
             || nameError
             || password.length < mgNumber
           }
-          onClick={ () => registerUser() }
+          onClick={ registerUser }
         >
           Cadastrar
         </button>

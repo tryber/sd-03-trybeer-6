@@ -8,6 +8,7 @@ const NewRegisterUser = async (name, email, password, role) => {
       password,
       role,
     });
+    console.log('entrou no axios');
     return response.data;
   } catch (err) {
     return err.response.status;

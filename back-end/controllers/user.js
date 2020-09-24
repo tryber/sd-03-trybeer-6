@@ -1,6 +1,7 @@
 const services = require('../services');
 
 async function createUser(req, res, next) {
+  console.log('ENTROU NO CREATE USER');
   try {
     const { body } = req;
     const user = await services.user.createUser(body);
