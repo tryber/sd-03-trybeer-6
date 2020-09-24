@@ -2,19 +2,43 @@
   width: 100%;
   min-height: 3em;
   background-color: black;
-  display: flex;
-  align-items: flex-start;
 }
+
+.parent-menu-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-menu-div {
+  padding: 0.5em;
+  width: 10%;
+}
+
+.title-menu-div {
+  text-align: center;
+  width: 90%;
+}
+
+.title {
+  color: white;
+  margin: 0;
+  padding: 0;
+  padding-top: 0.2em;
+}
+
 
 .menu-drag-button {
   border: none;
-  padding: none;
-  margin: 0;
-  margin-top: 5px;
+  padding: 0;
   background-color: black;
   color: white;
   font-size: 2.5em;
   cursor: pointer;
+  outline: none;
+}
+
+.menu-drag-button:active {
+  border: none;
 }
 
 .menu-closed {
@@ -59,11 +83,4 @@
   font-weight: 400;
   color: white;
   background-color: black;
-}
-
-.title {
-  color: white;
-  margin: 0;
-  margin-left: 1.5em;
-  padding: 0;
 }
