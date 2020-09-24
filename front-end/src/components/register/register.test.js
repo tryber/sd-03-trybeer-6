@@ -1,5 +1,5 @@
 import React from 'react';
-import { cleanup, fireEvent } from '@testing-library/react';
+import { cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
 import renderWithRouter from '../../utils';
@@ -298,8 +298,8 @@ describe('Verifica redirecionamento da rota ao cadastrar usuário com sucesso', 
     userEvent.click(btnCadastrar);
     expect(onClick).toHaveBeenCalled();
 
-    // const newPath = history.location.pathname;
-    // expect(newPath).toBe('/products');
+    const newPath = history.location.pathname;
+    expect(newPath).toBe('/products');
   });
 
   it.todo('Verifica rota ao cadastrar usuário administrador');
