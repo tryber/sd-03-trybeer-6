@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import NewRegisterUser from '../../utils/axios/RegisterUser';
+import Topbar from '../topbar/Topbar';
 
 export default function Register() {
   const [name, setName] = useState(null);
@@ -72,6 +73,7 @@ export default function Register() {
 
   return (
     <div>
+      <Topbar />
       <h1>Tela de cadastro de usuário</h1>
       <div>{registerError ? <p>E-mail already in database.</p> : null}</div>
       <form>
