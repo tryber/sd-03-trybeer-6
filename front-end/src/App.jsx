@@ -11,6 +11,8 @@ const App = () => (
     <Route path="/register" component={ Register } />
     <Route path="/products" component={ () => <div>Products Page</div> } />
     <Route path="/admin/orders" component={ () => <div>Admin Orders Page</div> } />
+    <Route path="/orders" component={ () => <div>Orders Page</div> } />
+    <Route path="/profile" component={ () => <div>Profile Page</div> } />
     <Route exact path="/" component={ Login } />
   </Switch>
 );

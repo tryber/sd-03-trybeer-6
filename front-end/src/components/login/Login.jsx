@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 export default function Login() {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
+  const history = useHistory();
 
   const emailValidator = (e) => {
     const {
@@ -60,7 +61,7 @@ export default function Login() {
         type="button"
         name="signin-btn"
         data-testid="signin-btn"
-        disabled={ !email || !password || emailError || passwordError }
+        onClick={ () => history.push('/register') }
       >
         ENTRAR
       </button>

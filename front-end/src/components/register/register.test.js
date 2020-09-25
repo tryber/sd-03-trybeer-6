@@ -1,7 +1,6 @@
 import React from 'react';
 import { waitFor } from '@testing-library/dom';
 import { cleanup, act } from '@testing-library/react';
-// import MutationObserver from 'mutationobserver-shim';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
 import renderWithRouter from '../../utils';

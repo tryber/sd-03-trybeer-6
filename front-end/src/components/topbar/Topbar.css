@@ -83,4 +83,9 @@
   font-weight: 400;
   color: white;
   background-color: black;
+  cursor: pointer;
+}
+
+.links {
+  text-decoration: none;
 }
