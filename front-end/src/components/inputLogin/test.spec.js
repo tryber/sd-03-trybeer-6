@@ -93,7 +93,7 @@ describe('Validação do componente/rota Login', () => {
     const loginBtn = getByTestId('signin-btn');
 
     expect(loginBtn).toBeEnabled();
-    
+
     await act(async () => {
       userEvent.click(loginBtn);
       await waitFor(() => {
