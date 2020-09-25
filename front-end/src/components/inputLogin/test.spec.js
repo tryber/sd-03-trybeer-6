@@ -1,5 +1,6 @@
 import React from 'react';
-// import { cleanup } from '@testing-library/react';
+import { waitFor } from '@testing-library/dom';
+import { act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
 import renderWithRouter from '../../utils';
@@ -78,6 +79,49 @@ describe('Validação do componente/rota Login', () => {
     expect(loginBtn).toBeDisabled();
   });
 
-  test.todo('Verifica se ao colocar email valido ele redirecionado para rota Home');
-  test.todo('Verifica se ao colocar email de adm valido ele redirecionado para rota Admin');
+  test('Verifica se ao colocar email valido ele redirecionado para rota Home', async () => {
+    const emailValue = 'user@test.com';
+    const passwordValue = 'test123';
+
+    const { history, getByTestId } = renderWithRouter(component, { route });
+    const emailInput = getByTestId('email-input');
+    const passwordInput = getByTestId('password-input');
+
+    userEvent.type(emailInput, emailValue);
+    userEvent.type(passwordInput, passwordValue);
+
+    const loginBtn = getByTestId('signin-btn');
+
+    expect(loginBtn).toBeEnabled();
+    
+    await act(async () => {
+      userEvent.click(loginBtn);
+      await waitFor(() => {
+        expect(history.location.pathname).toBe('/products');
+      });
+    });
+  });
+
+  test('Verifica se ao colocar email de adm valido ele redirecionado para rota Admin', async () => {
+    const emailValue = 'tryber@trybe.com.br';
+    const passwordValue = '123456';
+
+    const { history, getByTestId } = renderWithRouter(component, { route });
+    const emailInput = getByTestId('email-input');
+    const passwordInput = getByTestId('password-input');
+
+    userEvent.type(emailInput, emailValue);
+    userEvent.type(passwordInput, passwordValue);
+
+    const loginBtn = getByTestId('signin-btn');
+
+    expect(loginBtn).toBeEnabled();
+
+    await act(async () => {
+      userEvent.click(loginBtn);
+      await waitFor(() => {
+        expect(history.location.pathname).toBe('/admin/orders');
+      });
+    });
+  });
 });

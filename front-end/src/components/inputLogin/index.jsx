@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-// import PropTypes from 'prop-types';
-import history from 'history/browser';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './styles.css';
 
 const isValidParams = (email, password) => {
@@ -10,15 +8,24 @@ const isValidParams = (email, password) => {
 
   const minLengthPassword = 6;
 
-  return emailValidation && password.length > minLengthPassword ? false : true;
+  return emailValidation && password.length >= minLengthPassword ? false : true;
 };
 
-const loginRequest = async (email, password, message) => {
-  // const loginResponse = await axios.post('/login', {
-    //   email,
-    //   password
-    // });
-  history.push('/home');
+const loginRequest = async (email, password, message, history) => {
+  const loginResponse = await axios.post('http://localhost:3001/user/', {
+    email,
+    password,
+  });
+
+  const { data } = loginResponse;
+
+  if (data.token) localStorage.setItem('token', JSON.stringify(data.token));
+
+  data.role === 'administrator'
+    ? history.push('/admin/orders')
+    : history.push('/products');
+
+  if (loginResponse.status === 404) message('Email ou senha inválidos');
 };
 
 const InputTypes = ({ type, handleChanger }) => (
@@ -42,6 +49,7 @@ export default function InputLogin () {
   const [email, emailHandler] = useState(null);
   const [password, passwordHandler] = useState('');
   const [message, messageHandler] = useState(null);
+  const history = useHistory();
 
   return (
     <section className="MainLogin">
@@ -53,7 +61,7 @@ export default function InputLogin () {
         <button
           disabled={isValidParams(email, password)}
           data-testid="signin-btn"
-          onClick={() => loginRequest(email, password, messageHandler)}
+          onClick={() => loginRequest(email, password, messageHandler, history)}
         >
           ENTRAR
         </button>

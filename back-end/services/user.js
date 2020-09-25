@@ -11,7 +11,10 @@ async function loginUser(email, password) {
   const userAuthenticated = (await User.getFromDb(email)).authenticateUser(password);
   const token = jwt.sign(JSON.stringify(userAuthenticated), process.env.SECRET);
 
-  return token;
+  return {
+    ...userAuthenticated,
+    token,
+  };
 }
 
 module.exports = { createUser, loginUser };
