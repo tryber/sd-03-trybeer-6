@@ -13,7 +13,7 @@ async function loginUser(email, password) {
   const userDataWithoutPassword = removePassword(userAuthenticated);
   const token = jwt.sign(JSON.stringify(userDataWithoutPassword), process.env.SECRET);
 
-  return { token, ...userDataWithoutPassword };
+  return { token, userDataWithoutPassword };
 }
 
 async function getUser(email) {
@@ -21,4 +21,12 @@ async function getUser(email) {
   return user;
 }
 
-module.exports = { createUser, loginUser, getUser };
+async function updateUser(id, dataToUpdate) {
+  const user = User.getFromDb(id);
+  Object.entries(dataToUpdate).forEach(([propertie, value]) => {
+    user[propertie] = value;
+  });
+  return user;
+}
+
+module.exports = { createUser, loginUser, getUser, updateUser };
