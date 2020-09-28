@@ -15,9 +15,9 @@ async function createUser(req, res, next) {
 async function loginUser(req, res, next) {
   try {
     const { body: { email, password } } = req;
-    const data = await services.user.loginUser(email, password);
-    if (data.token) {
-      return res.status(201).json({ ...data });
+    const token = await services.user.loginUser(email, password);
+    if (token) {
+      return res.status(201).json({ token });
     }
     throw new Error({ status: 401, error: 'user is invalid' });
   } catch (error) {

@@ -12,20 +12,23 @@ const isValidParams = (email, password) => {
 };
 
 const loginRequest = async (email, password, message, history) => {
-  const loginResponse = await axios.post('http://localhost:3001/user/', {
-    email,
-    password,
-  });
+  try {
+    const loginResponse = await axios.post('http://localhost:3001/user/', {
+      email,
+      password,
+    });
 
-  const { data } = loginResponse;
+    const { data } = loginResponse;
+  
+    if (data.token) localStorage.setItem('token', JSON.stringify(data.token));
 
-  if (data.token) localStorage.setItem('token', JSON.stringify(data.token));
-
-  data.role === 'administrator'
-    ? history.push('/admin/orders')
-    : history.push('/products');
-
-  if (loginResponse.status === 404) message('Email ou senha inválidos');
+    data.role === 'administrator'
+      ? history.push('/admin/orders')
+      : history.push('/products');
+  } catch (err) {
+    console.log(err)
+    message('Email ou senha inválidos');
+  }
 };
 
 const InputTypes = ({ type, handleChanger }) => (
