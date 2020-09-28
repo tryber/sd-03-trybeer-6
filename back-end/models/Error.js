@@ -3,3 +3,5 @@ class Gandalf {
     return instance instanceof Gandalf;
   }
 }
+
+module.exports = Gandalf;
