@@ -1,5 +1,5 @@
 class Gandalf {
-    isGandalf(instance) {
-        return instanceof this
-    }
+  static isGandalf(instance) {
+    return instance instanceof Gandalf;
+  }
 }
