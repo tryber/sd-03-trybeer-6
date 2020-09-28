@@ -32,6 +32,7 @@
     "cypress-multi-reporters": "^1.2.3",
     "dotenv": "^8.2.0",
     "faker": "^4.1.0",
+    "jest-json-schema": "^2.1.0",
     "mocha": "^7.0.1",
     "mochawesome": "^4.1.0",
     "mochawesome-merge": "^4.0.0",

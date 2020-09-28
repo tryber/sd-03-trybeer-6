@@ -18,15 +18,16 @@ const loginRequest = async (email, password, message, history) => {
       password,
     });
 
-    const { data } = loginResponse;
-  
-    if (data.token) localStorage.setItem('token', JSON.stringify(data.token));
+    console.log(loginResponse)
 
-    data.role === 'administrator'
+    const { token, data: { user } } = loginResponse;
+
+    if (token) localStorage.setItem('token', JSON.stringify(token));
+
+    user.role === 'administrator'
       ? history.push('/admin/orders')
       : history.push('/products');
   } catch (err) {
-    console.log(err)
     message('Email ou senha inválidos');
   }
 };
