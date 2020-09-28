@@ -11,8 +11,8 @@ describe('Test the login endpoint', () => {
       email: 'user@test.com',
       password: 'test123',
     }).expect('status', 200);
-
-    const responseBody = JSON.parse(response._body);
+    const body = '_body';
+    const responseBody = JSON.parse(response[body]);
 
     expect(responseBody).toHaveProperty('token');
     expect(responseBody).toHaveProperty('user');
@@ -31,10 +31,10 @@ describe('Test the login endpoint', () => {
     expect(user).toMatchSchema(schema);
   });
 
-  it('should return a 400 status error when the data is incorrect', async () => {
-    const response = await frisby.post(loginEndpoint, {
+  it('should return a 401 status error when the data is incorrect', async () => {
+    await frisby.post(loginEndpoint, {
       email: 'user@test.com',
       password: 'test123',
-    }).expect('status', 400);
+    }).expect('status', 401);
   });
 });
