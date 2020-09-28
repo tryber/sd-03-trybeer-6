@@ -18,13 +18,21 @@ class User {
     return savedUser;
   }
 
-  static async getFromDb(email) {
+  static async getFromDb(emailOrId) {
     const db = await connection();
     const users = await db.getTable('users');
-    const user = await users.select()
-      .where('email = :email')
-      .bind('email', email)
-      .execute();
+    let user;
+    if (typeof emailOrId === 'string') {
+      user = await users.select()
+        .where('email = :email')
+        .bind('email', emailOrId)
+        .execute();
+    } else {
+      user = await users.select()
+        .where('id = :id')
+        .bind('id', emailOrId)
+        .execute();
+    }
 
     const [id, name, userEmail, password, role] = user.fetchOne();
     return new User({ id, name, email: userEmail, password, role });
