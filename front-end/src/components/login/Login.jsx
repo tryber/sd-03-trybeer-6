@@ -61,7 +61,7 @@ export default function Login() {
         type="button"
         name="signin-btn"
         data-testid="signin-btn"
-        onClick={ () => history.push('/register') }
+        onClick={ () => history.push('/profile') }
       >
         ENTRAR
       </button>

@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import Login from './components/login/Login';
 import Register from './components/register/Register';
+import Profile from './components/profile/Profile';
 
 const App = () => (
   <Switch>
@@ -12,7 +13,7 @@ const App = () => (
     <Route path="/products" component={ () => <div>Products Page</div> } />
     <Route path="/admin/orders" component={ () => <div>Admin Orders Page</div> } />
     <Route path="/orders" component={ () => <div>Orders Page</div> } />
-    <Route path="/profile" component={ () => <div>Profile Page</div> } />
+    <Route path="/profile" component={ Profile } />
     <Route exact path="/" component={ Login } />
   </Switch>
 );
