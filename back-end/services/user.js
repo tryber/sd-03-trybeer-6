@@ -11,7 +11,7 @@ async function createUser(userData) {
 async function loginUser(email, password) {
   const userAuthenticated = (await User.getFromDb(email)).authenticateUser(password);
   const userDataWithoutPassword = removePassword(userAuthenticated);
-  const token = jwt.sign(JSON.stringify(userDataWithoutPassword), process.env.SECRET);
+  const token = jwt.sign(JSON.stringify(userDataWithoutPassword), process.env.SECRET || 'shhh');
 
   return { token, userDataWithoutPassword };
 }

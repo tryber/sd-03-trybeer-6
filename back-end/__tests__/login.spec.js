@@ -11,8 +11,8 @@ describe('Test the login endpoint', () => {
       email: 'user@test.com',
       password: 'test123',
     }).expect('status', 200);
-    const body = '_body';
-    const responseBody = JSON.parse(response[body]);
+    const { _body: body } = response;
+    const responseBody = JSON.parse(body);
 
     expect(responseBody).toHaveProperty('token');
     expect(responseBody).toHaveProperty('user');
@@ -27,7 +27,6 @@ describe('Test the login endpoint', () => {
     };
 
     const { user } = responseBody;
-    console.log(user);
     expect(user).toMatchSchema(schema);
   });
 
