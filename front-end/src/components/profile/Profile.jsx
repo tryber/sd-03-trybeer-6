@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import TopBar from '../topbar/Topbar';
+import getUserByToken from '../../utils/axios/profile/GetDataByToken';
 import './Profile.css';
 
 export default function Profile() {
@@ -8,11 +9,11 @@ export default function Profile() {
   const [initialEmail, setInitialEmail] = useState(null);
   const [nameCopy, setNameCopy] = useState(null);
 
-  // useEffect(() => {
-  //   setInitialName(user.name);
-  //   setNameCopy(user.name);
-  //   setInitialEmail(user.email);
-  // }, []);
+  useEffect(() => {
+    const token = JSON.parse(localStorage.getItem('token'));
+    console.log('token antes da req', token);
+    getUserByToken(token);
+  }, []);
 
   return (
     <div>

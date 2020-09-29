@@ -18,8 +18,6 @@ const loginRequest = async (email, password, message, history) => {
       password,
     });
 
-    console.log(loginResponse);
-
     const { data: { user, token } } = loginResponse;
     console.log(token);
     if (token) localStorage.setItem('token', JSON.stringify(token));

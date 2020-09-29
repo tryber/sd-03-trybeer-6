@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import NewRegisterUser from '../../utils/axios/RegisterUser';
+import NewRegisterUser from '../../utils/axios/register/RegisterUser';
 
 export default function Register() {
   const [name, setName] = useState(null);
