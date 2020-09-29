@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use('/user', routers.user);
+app.use('/product', routers.product);
 
 app.use(middlewares.error);
 

@@ -1,3 +1,4 @@
+const Boom = require('@hapi/boom');
 const services = require('../services');
 
 async function createUser(req, res, next) {
@@ -19,9 +20,8 @@ async function loginUser(req, res, next) {
     if (token && user) {
       return res.status(200).json({ token, user });
     }
-    throw new Error({ status: 401, error: 'user is invalid' });
   } catch (error) {
-    next(error);
+    next(Boom.unauthorized());
   }
 }
 
@@ -35,6 +35,12 @@ async function getUser(req, res, next) {
   }
 }
 
+async function getUserByToken(req, res, _next) {
+  const { authorization: token } = req.header;
+  const userInfo = services.user.decodeToken(token);
+  return res.status(200).json(userInfo);
+}
+
 async function updateUser(req, res, next) {
   try {
     const { id } = req.params;
@@ -46,4 +52,4 @@ async function updateUser(req, res, next) {
   }
 }
 
-module.exports = { loginUser, createUser, getUser, updateUser };
+module.exports = { loginUser, createUser, getUser, updateUser, getUserByToken };
