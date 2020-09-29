@@ -32,7 +32,6 @@ describe('Test the login endpoint', () => {
 
   it('should return a 401 status error when the data is incorrect', async () => {
     await frisby.post(loginEndpoint, {
-      email: 'user@test.com',
       password: 'test123',
     }).expect('status', 401);
   });
