@@ -1,6 +1,6 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
+const User = require('../models/User');
 const { removePassword } = require('./utils');
 
 async function createUser(userData) {
@@ -29,4 +29,8 @@ async function updateUser(id, dataToUpdate) {
   return user;
 }
 
-module.exports = { createUser, loginUser, getUser, updateUser };
+async function decodeToken(token) {
+  return jwt.decode(token);
+}
+
+module.exports = { createUser, loginUser, getUser, updateUser, decodeToken };
