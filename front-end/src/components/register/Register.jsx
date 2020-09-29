@@ -18,10 +18,10 @@ export default function Register() {
     let role = 'client';
     if (isAdmin) role = 'administrator';
     const registerAnsw = await NewRegisterUser(name, email, password, role);
-    const statusErr = 404;
+    const statusErr = 500;
 
     if (registerAnsw === statusErr) return setRegisterError(registerAnsw);
-    if (registerAnsw.user.role) return history.push('/admin/orders');
+    if (registerAnsw.user.role === 'administrator') return history.push('/admin/orders');
     return history.push('/products');
   };
 
