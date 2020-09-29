@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import TopBar from '../topbar/Topbar';
-import user from './DataTest';
 import './Profile.css';
 
 export default function Profile() {
@@ -9,11 +8,11 @@ export default function Profile() {
   const [initialEmail, setInitialEmail] = useState(null);
   const [nameCopy, setNameCopy] = useState(null);
 
-  useEffect(() => {
-    setInitialName(user.name);
-    setNameCopy(user.name);
-    setInitialEmail(user.email);
-  }, []);
+  // useEffect(() => {
+  //   setInitialName(user.name);
+  //   setNameCopy(user.name);
+  //   setInitialEmail(user.email);
+  // }, []);
 
   return (
     <div>
@@ -26,8 +25,8 @@ export default function Profile() {
               name="profile-name"
               type="text"
               data-testid="profile-name-input"
-              value={initialName}
-              onChange={(e) => setInitialName(e.target.value)}
+              value={ initialName }
+              onChange={ (e) => setInitialName(e.target.value) }
               className="form-input"
             />
           </label>
@@ -38,14 +37,14 @@ export default function Profile() {
               type="text"
               readOnly
               data-testid="profile-email-input"
-              value={initialEmail}
+              value={ initialEmail }
               className="form-input"
             />
           </label>
           <button
             type="button"
             data-testid="profile-save-btn"
-            disabled={initialName === nameCopy}
+            disabled={ initialName === nameCopy }
             className="form-btn"
           >
             Salvar

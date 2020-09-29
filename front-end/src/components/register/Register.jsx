@@ -15,7 +15,9 @@ export default function Register() {
   const mgNumber = 6;
 
   const registerUser = async () => {
-    const registerAnsw = await NewRegisterUser(name, email, password, isAdmin);
+    let role = 'client';
+    if (isAdmin) role = 'administrator';
+    const registerAnsw = await NewRegisterUser(name, email, password, role);
     const statusErr = 404;
 
     if (registerAnsw === statusErr) return setRegisterError(registerAnsw);
