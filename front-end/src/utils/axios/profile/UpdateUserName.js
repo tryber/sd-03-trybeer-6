@@ -5,10 +5,10 @@ const UpdateUserName = async (id, name) => {
     const response = await axios.patch(`http://localhost:3001/user/${id}`, {
       name,
     });
-    console.log(response);
+    return response.data;
   } catch (err) {
-    console.log(err);
+    return err;
   }
 };
 
-UpdateUserName(1, 'willy');
+export default UpdateUserName;
