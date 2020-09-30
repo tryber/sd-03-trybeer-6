@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import TopBar from '../topbar/Topbar';
 import getUserByToken from '../../utils/axios/profile/GetDataByToken';
 import './Profile.css';
 
 export default function Profile() {
-  const [initialName, setInitialName] = useState(null);
-  const [initialEmail, setInitialEmail] = useState(null);
+  const [initialName, setInitialName] = useState('');
+  const [initialEmail, setInitialEmail] = useState('');
+  const [userId, setUserId] = useState('');
   const [nameCopy, setNameCopy] = useState(null);
+  const history = useHistory();
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem('token'));
-    console.log('token antes da req', token);
-    getUserByToken(token);
-  }, []);
+    if (!token) return history.push('/login');
+    const user = getUserByToken(token);
+    user.then((userOb) => {
+      setInitialName(userOb.name);
+      setInitialEmail(userOb.email);
+      setNameCopy(userOb.name);
+      setUserId(userOb.id);
+    });
+  }, [history]);
 
   return (
     <div>
@@ -46,7 +55,7 @@ export default function Profile() {
             type="button"
             data-testid="profile-save-btn"
             disabled={ initialName === nameCopy }
-            className="form-btn"
+            className={ (initialName === nameCopy) ? 'form-btn-disabled' : 'form-btn' }
           >
             Salvar
           </button>

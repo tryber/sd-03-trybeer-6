@@ -23,10 +23,12 @@ async function getUser(email) {
 }
 
 async function updateUser(id, dataToUpdate) {
-  const user = User.getFromDb(id);
+  console.log('service: ', id, dataToUpdate);
+  const user = await User.getFromDb(id);
   Object.entries(dataToUpdate).forEach(([propertie, value]) => {
     user[propertie] = value;
   });
+
   return user;
 }
 

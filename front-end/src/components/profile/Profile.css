@@ -45,3 +45,14 @@
   color: white;
   font-weight: 400;
 }
+
+.form-btn-disabled {
+  margin-top: 1em;
+  width: 100%;
+  font-size: 1.2em;
+  padding: 1em;
+  border-radius: 5px;
+  background-color: grey;
+  color: black;
+  font-weight: 400;
+}
