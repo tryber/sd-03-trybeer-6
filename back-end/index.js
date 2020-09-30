@@ -14,6 +14,7 @@ app.use(cors());
 
 app.use('/user', routers.user);
 app.use('/product', routers.product);
+app.use('/sales', routers.sales);
 
 app.use(middlewares.error);
 
