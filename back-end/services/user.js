@@ -18,15 +18,17 @@ async function loginUser(email, password) {
 
 async function getUser(email) {
   const user = await User.getFromDb(email);
-  console.log(user);
+
   return user;
 }
 
 async function updateUser(id, dataToUpdate) {
-  const user = User.getFromDb(id);
+  const user = await User.getFromDb(id);
   Object.entries(dataToUpdate).forEach(([propertie, value]) => {
     user[propertie] = value;
   });
+  await user.save();
+
   return user;
 }
 

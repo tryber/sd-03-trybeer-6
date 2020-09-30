@@ -1,5 +1,24 @@
 const connection = require('./connection');
 
+async function verifyUserInDb(emailOrId) {
+  const db = await connection();
+  const users = await db.getTable('users');
+  let user;
+  if (!parseInt(emailOrId, 10)) {
+    user = await users.select()
+      .where('email = :email')
+      .bind('email', emailOrId)
+      .execute();
+  } else {
+    user = await users.select()
+      .where('id = :id')
+      .bind('id', emailOrId)
+      .execute();
+  }
+
+  return !!user.fetchOne();
+}
+
 class User {
   constructor({ id, email, password, name, role }) {
     this.id = id;
@@ -11,11 +30,23 @@ class User {
 
   async save() {
     const db = await connection();
-
     const users = await db.getTable('users');
-    const savedUser = await users.insert(['name', 'email', 'password', 'role'])
-      .values(this.name, this.email, this.password, this.role)
-      .execute();
+    let savedUser;
+
+    if (await verifyUserInDb(this.id)) {
+      savedUser = await users.update()
+        .set('name', this.name)
+        .set('email', this.email)
+        .set('password', this.password)
+        .set('role', this.role)
+        .where('id = :id')
+        .bind('id', this.id)
+        .execute();
+    } else {
+      savedUser = await users.insert(['name', 'email', 'password', 'role'])
+        .values(this.name, this.email, this.password, this.role)
+        .execute();
+    }
     return savedUser;
   }
 
@@ -23,7 +54,7 @@ class User {
     const db = await connection();
     const users = await db.getTable('users');
     let user;
-    if (typeof emailOrId === 'string') {
+    if (!parseInt(emailOrId, 10)) {
       user = await users.select()
         .where('email = :email')
         .bind('email', emailOrId)
@@ -34,7 +65,6 @@ class User {
         .bind('id', emailOrId)
         .execute();
     }
-
     const [id, name, userEmail, password, role] = user.fetchOne();
     return new User({ id, name, email: userEmail, password, role });
   }
