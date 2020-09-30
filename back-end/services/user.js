@@ -30,6 +30,8 @@ async function updateUser(id, dataToUpdate) {
 }
 
 async function decodeToken(token) {
+  console.log(token);
+  console.log(jwt.decode(token));
   return jwt.decode(token);
 }
 

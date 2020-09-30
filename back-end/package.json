@@ -28,6 +28,7 @@
     "jest-joi-schema": "^1.0.0",
     "joi-with-jest": "^2.1.0",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.0",
     "multer": "^1.4.2"
   },
   "devDependencies": {
