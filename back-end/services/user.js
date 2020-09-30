@@ -18,6 +18,7 @@ async function loginUser(email, password) {
 
 async function getUser(email) {
   const user = await User.getFromDb(email);
+  console.log(user);
   return user;
 }
 
@@ -30,8 +31,6 @@ async function updateUser(id, dataToUpdate) {
 }
 
 async function decodeToken(token) {
-  console.log(token);
-  console.log(jwt.decode(token));
   return jwt.decode(token);
 }
 
