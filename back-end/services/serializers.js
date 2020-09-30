@@ -1,0 +1,26 @@
+const moment = require('moment');
+const utils = require('./utils');
+
+function serializeSale(saleData) {
+  const [
+    id,
+    userId,
+    totalPrice,
+    deliveryAddress,
+    deliveryNumber,
+    saleDate,
+    status,
+  ] = saleData;
+  const saleDateFormated = utils.formatDateToDbDate(saleDate);
+  return {
+    id,
+    userId,
+    totalPrice,
+    deliveryAddress,
+    deliveryNumber,
+    saleDate: saleDateFormated,
+    status,
+  };
+}
+
+module.exports = { serializeSale };

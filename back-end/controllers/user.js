@@ -36,8 +36,8 @@ async function getUser(req, res, next) {
 }
 
 async function getUserByToken(req, res, _next) {
-  const { authorization: token } = req.header;
-  const userInfo = services.user.decodeToken(token);
+  const { authorization: token } = req.headers;
+  const userInfo = await services.user.decodeToken(token);
   return res.status(200).json(userInfo);
 }
 
