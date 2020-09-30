@@ -1,7 +1,8 @@
 const connection = require('./connection');
 
 class User {
-  constructor({ email, password, name, role }) {
+  constructor({ id, email, password, name, role }) {
+    this.id = id;
     this.email = email;
     this.password = password;
     this.name = name;
