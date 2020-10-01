@@ -1,20 +1,34 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import './App.css';
+import Login from './pages';
 import Register from './components/register/Register';
 import Profile from './components/profile/Profile';
+import Topbar from './components/topbar/Topbar';
+
+import store from './store';
+
+import './App.css';
 
 const App = () => (
-  <Switch>
-    <Route path="/login" component={ () => <div>Login Page</div> } />
-    <Route path="/register" component={ Register } />
-    <Route path="/products" component={ () => <div>Products Page</div> } />
-    <Route path="/admin/orders" component={ () => <div>Admin Orders Page</div> } />
-    <Route path="/orders" component={ () => <div>Orders Page</div> } />
-    <Route path="/profile" component={ Profile } />
-    <Route exact path="/" component={ () => <div>Login Page</div> } />
-  </Switch>
+  <Provider store={ store }>
+    <Router>
+      <Switch>
+        <Route path="/login" component={ Login } />
+        <Route path="/register" component={ Register } />
+        <Route path="/products">
+          <Topbar menuTitle="TryBeer" />
+        </Route>
+        <Route path="/admin/orders">
+          <Topbar menuTitle="TryBeer" />
+        </Route>
+        <Route path="/orders" component={ () => <div>Orders Page</div> } />
+        <Route path="/profile" component={ Profile } />
+        <Route exact path="/" component={ Login } />
+      </Switch>
+    </Router>
+  </Provider>
 );
 
 export default App;
