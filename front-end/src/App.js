@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Login from './pages';
+import { Login, Products } from './pages';
 import Register from './components/register/Register';
 import Profile from './components/profile/Profile';
 import Topbar from './components/topbar/Topbar';
@@ -17,9 +17,7 @@ const App = () => (
       <Switch>
         <Route path="/login" component={ Login } />
         <Route path="/register" component={ Register } />
-        <Route path="/products">
-          <Topbar menuTitle="TryBeer" />
-        </Route>
+        <Route path="/products" component={ Products } />
         <Route path="/admin/orders">
           <Topbar menuTitle="TryBeer" />
         </Route>

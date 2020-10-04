@@ -103,7 +103,7 @@ describe('Validação do componente/rota Login', () => {
     });
   });
 
-  test.skip('Verifica se ao colocar email de adm valido ele redirecionado para rota Admin', async () => {
+  test('Verifica se ao colocar email de adm valido ele redirecionado para rota Admin', async () => {
     const emailValue = 'tryber@trybe.com.br';
     const passwordValue = '123456';
 
