@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import history from 'history/browser';
+import { useHistory } from 'react-router-dom';
 import ProductCard from './productCard';
 
 const ProductsItens = ({ total }) => {
   const [beers, setBeers] = useState([]);
+  const history = useHistory();
   useEffect(() => {
     axios.get('http://localhost:3001/product/')
       .then(({ data }) => setBeers([...data]));
@@ -22,10 +23,10 @@ const ProductsItens = ({ total }) => {
         <button
           type="button"
           data-testid="checkout-bottom-btn"
-          onClick={() => history.push('/checkout')}
-          disabled={totalCart > 0 ? false : true}
+          onClick={ () => history.push('/checkout') }
+          disabled={ totalCart > 0 ? false : true }
         >
-          Ver Carrinho 
+          Ver Carrinho
         </button>
         <p
           data-testid="checkout-bottom-btn-value"
