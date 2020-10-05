@@ -20,6 +20,7 @@ const ProductsItens = ({ total }) => {
       </div>
       <div>
         <button
+          type="button"
           data-testid="checkout-bottom-btn"
           onClick={() => history.push('/checkout')}
           disabled={totalCart > 0 ? false : true}

@@ -15,6 +15,7 @@ const App = () => (
   <Provider store={ store }>
     <Router>
       <Switch>
+        <Route path="/orders" component={ () => <div> Pagina de checkout </div> } />
         <Route path="/login" component={ Login } />
         <Route path="/register" component={ Register } />
         <Route path="/products">
@@ -23,7 +24,7 @@ const App = () => (
         <Route path="/admin/orders">
           <Topbar menuTitle="TryBeer" />
         </Route>
-        <Route path="/orders" component={ () => <div>Orders Page</div> } />
+        {/* <Route path="/orders" component={ () => <div>Orders Page</div> } /> */}
         <Route path="/profile" component={ Profile } />
         <Route exact path="/" component={ Login } />
       </Switch>
