@@ -20,7 +20,7 @@ export default function Register() {
     const registerAnsw = await NewRegisterUser(name, email, password, role);
     const statusErr = 500;
 
-    localStorage.setItem('token', 'aiusdhdsjsdkjdskj')
+    localStorage.setItem('token', 'aiusdhdsjsdkjdskj');
 
     if (registerAnsw === statusErr) return setRegisterError(registerAnsw);
     if (registerAnsw.user.role === 'administrator') return history.push('/admin/orders');
