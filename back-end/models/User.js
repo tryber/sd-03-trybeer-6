@@ -72,6 +72,10 @@ class User {
   authenticateUser(password) {
     return this.password === password ? this : null;
   }
+
+  get sales() {
+
+  }
 }
 
 module.exports = User;

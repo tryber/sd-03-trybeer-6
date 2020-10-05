@@ -36,4 +36,9 @@ async function decodeToken(token) {
   return jwt.decode(token);
 }
 
-module.exports = { createUser, loginUser, getUser, updateUser, decodeToken };
+async function getSales(id) {
+  const user = new User({ id });
+  const sales = user.sales();
+  return sales;
+}
+module.exports = { createUser, loginUser, getUser, updateUser, decodeToken, getSales };

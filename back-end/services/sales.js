@@ -5,4 +5,15 @@ async function createSale(saleData) {
   return sale.save();
 }
 
-module.exports = { createSale };
+async function getSales() {
+  const sales = await Sale.getAllSales();
+  return sales;
+}
+
+async function salesByUser(id) {
+  const sales = await Sale.byUser(id);
+  return sales;
++
+}
+
+module.exports = { createSale, getSales, salesByUser };
