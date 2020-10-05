@@ -1,7 +1,7 @@
 import { PRODUCT_HANDLER } from '../actions';
 
 const INITIAL_STATE = {
-  cart: {},
+  cart: [],
   total: 0,
 };
 
@@ -10,7 +10,7 @@ const productReducer = (state = INITIAL_STATE, action) => {
     case PRODUCT_HANDLER:
       return {
         ...state,
-        cart: { ...action.data },
+        cart: [...action.data],
         total: action.total,
       };
     default:

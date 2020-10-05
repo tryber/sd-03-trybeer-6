@@ -2,31 +2,38 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { productsHandler } from '../../actions';
 
+const findProduct = (products, name) => products
+    .findIndex((product) => product.product === name);
+
 const productAdd = (product, cart, price, total, callback) => {
-  if (!cart[product]) {
-    cart[product] = { quantity: 1, price };
-    localStorage.setItem('cartItens', JSON.stringify(cart));
+  const productIndex = findProduct(cart, product);
+
+  if (productIndex === -1) {
+    const newCart = [...cart, { quantity: 1, price, product }]
+    localStorage.setItem('cartItens', JSON.stringify(newCart));
     localStorage.setItem('totalCart', JSON.stringify(total));
-    callback(cart, total);
+    callback(newCart, total);
     return;
   }
 
-  cart[product].quantity += 1;
+  cart[productIndex].quantity += 1;
   localStorage.setItem('cartItens', JSON.stringify(cart));
   localStorage.setItem('totalCart', JSON.stringify(total));
   callback(cart, total);
 };
 
 const productRemove = (product, cart, total, callback) => {
-  if (cart[product].quantity > 0) {
-    cart[product].quantity -= 1;
+  const productIndex = findProduct(cart, product);
+
+  if (productIndex !== -1 && cart[productIndex].quantity > 0) {
+    cart[productIndex].quantity -= 1;
     localStorage.setItem('cartItens', JSON.stringify(cart));
     localStorage.setItem('totalCart', JSON.stringify(total));
     callback(cart, total);
   }
-  
-  if (cart[product].quantity && cart[product].quantity === 0) {
-    delete cart[product];
+
+  if (productIndex !== -1 && cart[productIndex].quantity === 0) {
+    cart.splice(productIndex, 1)
     localStorage.setItem('cartItens', JSON.stringify(cart));
     callback(cart, total);
   }
@@ -36,6 +43,8 @@ const ProductCard = ({ index, data: { price, thumbnail, name }, cart, total, pro
   const cartStorage = JSON.parse(localStorage.getItem('cartItens')) || cart;
 
   const totalCart = Number(JSON.parse(localStorage.getItem('totalCart'))) || total;
+
+  const productIndex = findProduct(cartStorage, name);
 
   return (
     <div>
@@ -60,7 +69,7 @@ const ProductCard = ({ index, data: { price, thumbnail, name }, cart, total, pro
       <span
         data-testid={`${index}-product-qtd`}
       >
-        {cartStorage[name] ? cartStorage[name].quantity : 0}
+        {productIndex !== -1 ? cartStorage[productIndex].quantity : 0}
       </span>
       <button
         data-testid={`${index}-product-plus`}
