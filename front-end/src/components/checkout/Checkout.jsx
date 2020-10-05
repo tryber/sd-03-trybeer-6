@@ -3,23 +3,28 @@ import { connect } from 'react-redux';
 
 import Topbar from '../topbar/Topbar';
 
-function Checkout({ cart, total }) {
+function Checkout({ cart }) {
   const cartItens = [JSON.parse(localStorage.getItem('cartItens')) || cart];
-  const totalItens = JSON.parse(localStorage.getItem('totalCart')) || total;
 
   console.log(cartItens);
 
   return (
     <div>
       <Topbar menuTitle="Finalizar Pedido" />
-      Página de checkout
+      <h2>Produtos</h2>
+      <ul>
+        {/* { cartItens.map((item) => (
+          <li key={item.[Skol laa ]}>
+
+          </li>
+        ))} */}
+      </ul>
     </div>
   );
 }
 
-const mapStateToProps = ({ cart, total }) => ({
+const mapStateToProps = ({ cart }) => ({
   cart,
-  total,
 });
 
 export default connect(mapStateToProps)(Checkout);

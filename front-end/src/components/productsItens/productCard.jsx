@@ -24,7 +24,7 @@ const productRemove = (product, cart, total, callback) => {
     localStorage.setItem('totalCart', JSON.stringify(total));
     callback(cart, total);
   }
-  
+
   if (cart[product].quantity && cart[product].quantity === 0) {
     delete cart[product];
     localStorage.setItem('cartItens', JSON.stringify(cart));
@@ -64,6 +64,7 @@ const ProductCard = ({ index, data: { price, thumbnail, name }, cart, total, pro
         {cartStorage[name] ? cartStorage[name].quantity : 0}
       </span>
       <button
+        
         data-testid={`${index}-product-plus`}
         onClick={() => productAdd(
           name,
