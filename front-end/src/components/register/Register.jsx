@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import NewRegisterUser from '../../utils/axios/RegisterUser';
+import NewRegisterUser from '../../utils/axios/register/RegisterUser';
 
 export default function Register() {
   const [name, setName] = useState(null);
@@ -15,11 +15,15 @@ export default function Register() {
   const mgNumber = 6;
 
   const registerUser = async () => {
-    const registerAnsw = await NewRegisterUser(name, email, password, isAdmin);
-    const statusErr = 404;
+    let role = 'client';
+    if (isAdmin) role = 'administrator';
+    const registerAnsw = await NewRegisterUser(name, email, password, role);
+    const statusErr = 500;
+
+    localStorage.setItem('token', 'aiusdhdsjsdkjdskj');
 
     if (registerAnsw === statusErr) return setRegisterError(registerAnsw);
-    if (registerAnsw.user.role) return history.push('/admin/orders');
+    if (registerAnsw.user.role === 'administrator') return history.push('/admin/orders');
     return history.push('/products');
   };
 
