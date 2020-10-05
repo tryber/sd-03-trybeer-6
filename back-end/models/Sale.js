@@ -3,6 +3,15 @@ const serializers = require('../services/serializers');
 
 const connection = require('./connection');
 
+function getSaleProducts(id, unifiedTable, productTable) {
+  const sales = unifiedTable.filter(([saleId]) => +saleId === +id);
+  const products = sales.reduce((acc, [_saleId, productId, qnt]) => {
+    const product = productTable.find(([idToFind]) => idToFind === productId)[1];
+    return { ...acc, [product]: qnt };
+  }, {});
+  return products;
+}
+
 class Sale {
   constructor({
     id,
@@ -71,9 +80,15 @@ class Sale {
     const db = await connection();
 
     const salesTable = await db.getTable('sales');
-    const sales = await salesTable.select().execute();
+    const sales = (await salesTable.select().execute()).fetchAll();
+
+    const salesProductsTable = await db.getTable('sales_products');
+    const salesProducts = (await salesProductsTable.select().execute()).fetchAll();
+
+    const productsTable = await db.getTable('products');
+    const products = (await productsTable.select().execute()).fetchAll();
+
     return sales
-      .fetchAll()
       .map(
         ([
           id,
@@ -91,13 +106,15 @@ class Sale {
           deliveryNumber,
           saleate,
           status,
+          products: getSaleProducts(id, salesProducts, products),
         }),
       );
   }
 
   static async byUser(userId) {
     const sales = await this.getAllSales();
-    return sales.filter(({ userId: id }) => id === userId);
+
+    return sales.filter(({ userId: id }) => id === +userId);
   }
 }
 

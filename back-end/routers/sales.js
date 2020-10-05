@@ -4,5 +4,6 @@ const Hero = require('../services/hero.js');
 
 router.post('/', Hero(Controllers.sales.regiterSale));
 router.get('/', Hero(Controllers.sales.getAllSales));
+router.get('/');
 
 module.exports = router;

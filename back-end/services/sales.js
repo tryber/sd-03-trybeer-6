@@ -13,7 +13,6 @@ async function getSales() {
 async function salesByUser(id) {
   const sales = await Sale.byUser(id);
   return sales;
-+
 }
 
 module.exports = { createSale, getSales, salesByUser };
