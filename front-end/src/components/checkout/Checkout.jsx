@@ -1,8 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Topbar from '../topbar/Topbar';
 
-export default function Checkout() {
+function Checkout({ cart, total }) {
+  const cartItens = [JSON.parse(localStorage.getItem('cartItens')) || cart];
+  const totalItens = JSON.parse(localStorage.getItem('totalCart')) || total;
+
+  console.log(cartItens);
+
   return (
     <div>
       <Topbar menuTitle="Finalizar Pedido" />
@@ -10,6 +16,13 @@ export default function Checkout() {
     </div>
   );
 }
+
+const mapStateToProps = ({ cart, total }) => ({
+  cart,
+  total,
+});
+
+export default connect(mapStateToProps)(Checkout);
 
 /* {
   cart: {

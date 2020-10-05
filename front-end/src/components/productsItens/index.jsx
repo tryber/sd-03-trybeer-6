@@ -39,7 +39,7 @@ const ProductsItens = ({ total }) => {
 };
 
 const mapStateToProps = ({ total }) => ({
-  total
+  total,
 });
 
 export default connect(mapStateToProps)(ProductsItens);

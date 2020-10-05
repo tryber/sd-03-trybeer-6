@@ -49,6 +49,7 @@ const ProductCard = ({ index, data: { price, thumbnail, name }, cart, total, pro
         R$ {parseFloat(price).toFixed(2).replace('.', ',')}
       </h3>
       <button
+        type="button"
         data-testid={`${index}-product-minus`}
         onClick={() => productRemove(name, cartStorage, totalCart - Number(price), productHandler)}
       >
