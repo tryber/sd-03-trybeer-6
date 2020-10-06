@@ -5,10 +5,11 @@ const connection = require('./connection');
 
 function getSaleProducts(id, unifiedTable, productTable) {
   const sales = unifiedTable.filter(([saleId]) => +saleId === +id);
-  const products = sales.reduce((acc, [_saleId, productId, qnt]) => {
-    const product = productTable.find(([idToFind]) => idToFind === productId)[1];
-    return { ...acc, [product]: qnt };
-  }, {});
+  const products = sales.map(([_saleId, productId, qnt]) => {
+    const product = productTable.find(([idToFind]) => idToFind === productId);
+    const productSerialized = serializers.serializeProduct(product);
+    return { product: productSerialized, qnt };
+  });
   return products;
 }
 
@@ -115,6 +116,12 @@ class Sale {
     const sales = await this.getAllSales();
 
     return sales.filter(({ userId: id }) => id === +userId);
+  }
+
+  static async byId(saleId) {
+    const sales = await this.getAllSales();
+
+    return sales.filter(({ id }) => id === +saleId);
   }
 }
 

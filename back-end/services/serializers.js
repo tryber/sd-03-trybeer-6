@@ -23,4 +23,10 @@ function serializeSale(saleData) {
   };
 }
 
-module.exports = { serializeSale };
+function serializeProduct(product) {
+  const [id, name, price, urlImage] = product;
+
+  return { id, name, price, urlImage };
+}
+
+module.exports = { serializeSale, serializeProduct };

@@ -15,4 +15,9 @@ async function salesByUser(id) {
   return sales;
 }
 
-module.exports = { createSale, getSales, salesByUser };
+async function getById(id) {
+  const sales = await Sale.byId(id);
+  return sales;
+}
+
+module.exports = { createSale, getSales, salesByUser, getById };
