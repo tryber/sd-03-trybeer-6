@@ -11,18 +11,25 @@ function Checkout() {
   const history = useHistory();
   const magicNumber = 0;
   const fixeNumber = 2;
+  const timeOut = 5000;
   const [cartItens, setCartItens] = useState();
   const [total, setTotal] = useState(magicNumber);
   const [rua, setRua] = useState(null);
   const [numero, setNumero] = useState(null);
+  const [status, setStatus] = useState(false);
 
   const registerSale = async () => {
     const user = await getUserByToken(JSON.parse(localStorage.getItem('token')));
-    console.log(user);
     const totalPrice = parseFloat(total).toFixed(fixeNumber);
-    console.log(totalPrice);
     const sale = await RegisterSale(user.id, totalPrice, rua, numero);
-    console.log(sale);
+
+    if (sale.id) {
+      setStatus(true);
+      setTimeout(() => {
+        localStorage.removeItem('cartItens');
+        history.push('/products');
+      }, timeOut);
+    }
   };
 
   const calcList = (itens) => {
@@ -54,6 +61,7 @@ function Checkout() {
       <h2>Produtos</h2>
       { cartItens && cartItens.length === magicNumber
         ? <h3>Não há produtos no carrinho</h3> : null }
+      { status ? <h3>Compra realizada com sucesso!</h3> : null}
       <ul>
         {cartItens
           && cartItens.length > magicNumber
