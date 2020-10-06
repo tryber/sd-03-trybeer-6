@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { BsTrash } from 'react-icons/bs';
 
 import Topbar from '../topbar/Topbar';
-// import GetDataByToken from '../../utils/axios/profile/GetDataByToken';
-// import RegisterSale from '../../utils/axios/checkout/RegisterSale';
+import getUserByToken from '../../utils/axios/profile/GetDataByToken';
+import RegisterSale from '../../utils/axios/checkout/RegisterSale';
 
 function Checkout() {
   const history = useHistory();
@@ -15,6 +15,15 @@ function Checkout() {
   const [total, setTotal] = useState(magicNumber);
   const [rua, setRua] = useState(null);
   const [numero, setNumero] = useState(null);
+
+  const registerSale = async () => {
+    const user = await getUserByToken(JSON.parse(localStorage.getItem('token')));
+    console.log(user);
+    const totalPrice = parseFloat(total).toFixed(fixeNumber);
+    console.log(totalPrice);
+    const sale = await RegisterSale(user.id, totalPrice, rua, numero);
+    console.log(sale);
+  };
 
   const calcList = (itens) => {
     const resumo = itens.reduce((acc, cur) => {
@@ -43,7 +52,8 @@ function Checkout() {
     <div>
       <Topbar menuTitle="Finalizar Pedido" />
       <h2>Produtos</h2>
-      { cartItens.length === magicNumber ? <h3>Não há produtos no carrinho</h3> : null }
+      { cartItens && cartItens.length === magicNumber
+        ? <h3>Não há produtos no carrinho</h3> : null }
       <ul>
         {cartItens
           && cartItens.length > magicNumber
@@ -51,14 +61,14 @@ function Checkout() {
             <li key={ product }>
               <div key={ `${product}+${price}` }>
                 <span data-testid={ `${i}-product-qtd-input` }>{quantity}</span>
-                <span data-testid={ `${i}-product-product-name` }>{product}</span>
+                <span data-testid={ `${i}-product-name` }>{product}</span>
                 <span data-testid={ `${i}-product-total-value` }>
-                  {price * quantity}
+                  {`R$ ${(price * quantity).toFixed(fixeNumber).replace('.', ',')}`}
                 </span>
                 <span
                   data-testid={ `${i}-product-unit-price` }
                 >
-                  {`(${price})`}
+                  {`(R$ ${parseFloat(price).toFixed(fixeNumber).replace('.', ',')} un)`}
                 </span>
                 <button
                   type="button"
@@ -97,6 +107,7 @@ function Checkout() {
           type="button"
           disabled={ !rua || !numero || total === magicNumber }
           data-testid="checkout-finish-btn"
+          onClick={ () => registerSale() }
         >
           Finalizar pedido
         </button>
