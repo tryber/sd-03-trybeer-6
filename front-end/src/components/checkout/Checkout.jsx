@@ -15,6 +15,7 @@ function Checkout() {
     localStorage.removeItem('cartItens');
     localStorage.setItem('cartItens', JSON.stringify(newItens));
     setCartItens(newItens);
+    
   };
 
   useEffect(() => {
