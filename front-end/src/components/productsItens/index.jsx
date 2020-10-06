@@ -13,7 +13,6 @@ const ProductsItens = ({ total }) => {
   }, []);
 
   const totalCart = localStorage.getItem('totalCart') || total;
-  console.log('history depois do fluxo', history);
 
   return (
     <div>
