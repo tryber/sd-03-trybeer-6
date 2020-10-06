@@ -6,7 +6,7 @@ function removePassword(dataToRemove) {
 }
 
 function formatDateToDbDate(date) {
-  return moment(date).format('YYYY-MM-DD HH:MM:SS');
+  return moment(date).format('YYYY-MM-DD');
 }
 
 module.exports = { removePassword, formatDateToDbDate };
