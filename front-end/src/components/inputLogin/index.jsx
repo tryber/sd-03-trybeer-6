@@ -18,6 +18,7 @@ const loginRequest = async (email, password, message, history) => {
       password,
     });
 
+    console.log(loginResponse);
     const { data: { token, user } } = loginResponse;
 
     localStorage.clear();
