@@ -6,7 +6,7 @@ import '@testing-library/jest-dom/extend-expect';
 import renderWithRouter from '../../utils';
 import Profile from './Profile';
 
-beforeEach(() => cleanup());
+// beforeEach(() => cleanup());
 
 const component = <Profile />;
 const route = '/profile';
