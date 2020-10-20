@@ -1,7 +1,7 @@
 import React from 'react';
-import { waitFor } from '@testing-library/dom';
-import { cleanup, act } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+// import { waitFor } from '@testing-library/dom';
+// import { cleanup, act } from '@testing-library/react';
+// import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom/extend-expect';
 import renderWithRouter from '../../utils';
 import Profile from './Profile';
