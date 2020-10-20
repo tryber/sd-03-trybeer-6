@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { BsJustify } from 'react-icons/bs';
 
-import './Topbar.css';
+import './adminSideBar.css';
 
-export default function TopBar(props) {
+export default function AdminSideBar(props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const { menuTitle } = props;
 
@@ -30,21 +30,16 @@ export default function TopBar(props) {
           </div>
         </div>
       </div>
-      <div className={ menuOpen ? 'menu-open side-menu-container' : 'menu-closed' }>
+      <div className={ menuOpen ? 'menu-open admin-side-bar-container' : 'menu-open' }>
         <ul className="menu-ul">
-          <Link to="/products" className="links">
-            <li className="menu-li" data-testid="side-menu-item-products">
-              Produtos
+          <Link to="/admin/orders" className="links">
+            <li className="menu-li" data-testid="side-menu-item-orders">
+              Pedidos
             </li>
           </Link>
-          <Link to="/orders" className="links">
-            <li className="menu-li" data-testid="side-menu-item-my-orders">
-              Meus pedidos
-            </li>
-          </Link>
-          <Link to="/profile" className="links">
-            <li className="menu-li" data-testid="side-menu-item-my-profile">
-              Meu Perfil
+          <Link to="/admin/profile" className="links">
+            <li className="menu-li" data-testid="side-menu-item-profile">
+              Perfil
             </li>
           </Link>
           <Link to="/login" className="links">
@@ -62,6 +57,6 @@ export default function TopBar(props) {
   );
 }
 
-TopBar.propTypes = {
+AdminSideBar.propTypes = {
   menuTitle: PropTypes.string.isRequired,
 };

@@ -1,0 +1,91 @@
+.menu-container {
+  width: 100%;
+  min-height: 3em;
+  background-color: black;
+}
+
+.parent-menu-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-menu-div {
+  padding: 0.5em;
+  width: 10%;
+}
+
+.title-menu-div {
+  text-align: center;
+  width: 90%;
+}
+
+.title {
+  color: white;
+  margin: 0;
+  padding: 0;
+  padding-top: 0.2em;
+}
+
+
+.menu-drag-button {
+  border: none;
+  padding: 0;
+  background-color: black;
+  color: white;
+  font-size: 2.5em;
+  cursor: pointer;
+  outline: none;
+}
+
+.menu-drag-button:active {
+  border: none;
+}
+
+.menu-closed {
+  position: absolute;
+  top: 3em;
+  left: -1000px;
+  transition: all 1s ease-in-out;
+  background-color: black;
+  color: white;
+  height: 800px;
+  width: 250px;
+}
+
+.menu-open {
+  position: absolute;
+  left: 0;
+  top: 3em;
+  transition: all 1s ease-in-out;
+  background-color: black;
+  color: white;
+  height: 800px;
+  width: 250px;
+}
+
+.menu-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.menu-li {
+  width: 150px;
+  text-align: center;
+  border: 3px solid white;
+  border-radius: 6px;
+  margin: 5px;
+  padding: 0.5em 2em;
+  font-size: 1em;
+  font-weight: 400;
+  color: white;
+  background-color: black;
+  cursor: pointer;
+}
+
+.links {
+  text-decoration: none;
+}

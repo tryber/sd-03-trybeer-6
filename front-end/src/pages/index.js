@@ -1,10 +1,9 @@
 import Login from './Login';
 import Products from './Products';
-import Sales from './Sales';
-
+import AdminProfile from './AdminProfile';
 
 export {
   Login,
   Products,
-  Sales,
+  AdminProfile,
 };

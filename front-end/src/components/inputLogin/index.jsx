@@ -20,6 +20,8 @@ const loginRequest = async (email, password, message, history) => {
 
     const { data: { token, user } } = loginResponse;
 
+    localStorage.clear();
+
     if (token) localStorage.setItem('token', JSON.stringify(token));
 
     user.role === 'administrator'
