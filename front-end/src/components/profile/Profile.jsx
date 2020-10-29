@@ -33,7 +33,7 @@ export default function Profile() {
 
   return (
     <div>
-      <TopBar menuTitle="Meu perfil" />
+      <TopBar menuTitle="Meu Perfil" typeOfUser="client" />
       <div className="container">
         <div>
           <h2>{ updated ? 'Atualização concluída com sucesso' : null}</h2>

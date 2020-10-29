@@ -34,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  alert: {
+    width: '95%',
+  },
 }));
 
 export default function Register() {
@@ -44,7 +47,7 @@ export default function Register() {
   const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
   const [nameError, setNameError] = useState(null);
-  const [registerError, setRegisterError] = useState(null);
+  const [open, setOpen] = useState(false);
   const history = useHistory();
   const mgNumber = 6;
   const classes = useStyles();
@@ -57,7 +60,7 @@ export default function Register() {
 
     localStorage.setItem('token', 'aiusdhdsjsdkjdskj');
 
-    if (registerAnsw === statusErr) return setRegisterError(registerAnsw);
+    if (registerAnsw === statusErr) return setOpen(true);
 
     if (registerAnsw.user.role === 'administrator') {
       return history.push('/admin/orders');
@@ -120,9 +123,25 @@ export default function Register() {
     return (setNameError(null), setName(typedName));
   };
 
+  const handleClose = () => setOpen(false);
+
   return (
     <Container component="main" maxWidth="xs">
       <div className={ classes.paper }>
+        <Snackbar
+          open={ open }
+          autoHideDuration={ 6000 }
+          onClose={ handleClose }
+          className={ classes.alert }
+        >
+          <Alert
+            onClose={ handleClose }
+            severity="error"
+            className={ classes.alert }
+          >
+            O e-mail informado já está cadastrado!
+          </Alert>
+        </Snackbar>
         <Avatar className={ classes.avatar }>
           <LockOutlinedIcon />
         </Avatar>

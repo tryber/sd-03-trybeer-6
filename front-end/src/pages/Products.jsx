@@ -8,7 +8,7 @@ const Products = () => {
 
   if (token) return (
     <div>
-      <Topbar menuTitle="TryBeer" />
+      <Topbar menuTitle="TryBeer" typeOfUser="client" />
       <ProductsItens />
     </div>
   );
