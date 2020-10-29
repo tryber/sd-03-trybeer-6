@@ -2,6 +2,7 @@ const { createSale, getSales, salesByUser, getById } = require('../services/sale
 
 async function regiterSale(req, res) {
   const { body: saleData } = req;
+  console.log('saleData', saleData);
   const sale = await createSale(saleData);
   return res.status(201).json(sale);
 }
