@@ -2,7 +2,9 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { Login, Products, Sales } from './pages';
+import {
+  Login, Products, Sales, SaleDetails,
+} from './pages';
 import Register from './components/register/Register';
 import Profile from './components/profile/Profile';
 import Topbar from './components/topbar/Topbar';
@@ -21,7 +23,9 @@ const App = () => (
         <Route path="/admin/orders">
           <Topbar menuTitle="TryBeer" />
         </Route>
+        <Route path="/orders/:id" component={ SaleDetails } />
         <Route path="/orders" component={ Sales } />
+
         <Route path="/profile" component={ Profile } />
         <Route exact path="/" component={ Login } />
       </Switch>

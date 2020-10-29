@@ -121,7 +121,7 @@ class Sale {
   static async byId(saleId) {
     const sales = await this.getAllSales();
 
-    return sales.filter(({ id }) => id === +saleId);
+    return sales.find(({ id }) => id === +saleId);
   }
 }
 

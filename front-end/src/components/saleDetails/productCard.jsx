@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+const maxFloatNumbers = 2;
+
 export default function Productcard({ id, qty, product }) {
   return (
     <div>
@@ -14,7 +16,7 @@ export default function Productcard({ id, qty, product }) {
       </p>
 
       <p data-testid={ `${id}-product-total-value` }>
-        {+qty * product.price}
+        {(+qty * parseFloat(product.price)).toFixed(maxFloatNumbers)}
       </p>
     </div>
   );
