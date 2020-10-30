@@ -1,25 +1,86 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { BsTrash } from 'react-icons/bs';
 
+import {
+  Container,
+  Typography,
+  Paper,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListItemSecondaryAction,
+  IconButton,
+  Grid,
+  TextField,
+  Button,
+  Snackbar,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import LabelIcon from '@material-ui/icons/Label';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+import Alert from '../../utils/Alert';
 import Topbar from '../topbar/Topbar';
 import getUserByToken from '../../utils/axios/profile/GetDataByToken';
 import RegisterSale from '../../utils/axios/checkout/RegisterSale';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(12),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: '#E9F3AA',
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  alert: {
+    width: '95%',
+  },
+  title: {
+    alignSelf: 'flex-start',
+    fontWeight: '400',
+    padding: theme.spacing(2),
+    marginLeft: theme.spacing(10),
+  },
+  listIcon: {
+    color: 'black',
+    height: '20px',
+    width: '18px',
+  },
+  deleteIcon: {
+    color: '#424242',
+    height: '20px',
+    width: '18px',
+  },
+  total: {
+    fontWeight: 700,
+  },
+  entregaTitle: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 function Checkout() {
   const history = useHistory();
   const magicNumber = 0;
   const fixeNumber = 2;
-  const timeOut = 5000;
+  const timeOut = 4000;
   const [cartItens, setCartItens] = useState();
   const [total, setTotal] = useState(magicNumber);
   const [rua, setRua] = useState(null);
   const [numero, setNumero] = useState(null);
   const [status, setStatus] = useState(false);
+  const classes = useStyles();
 
   const registerSale = async () => {
-    const user = await getUserByToken(JSON.parse(localStorage.getItem('token')));
+    const user = await getUserByToken(
+      JSON.parse(localStorage.getItem('token')),
+    );
     const totalPrice = parseFloat(total).toFixed(fixeNumber);
     const sale = await RegisterSale(user.id, totalPrice, rua, numero);
 
@@ -57,86 +118,109 @@ function Checkout() {
 
   return (
     <div>
-      <Topbar menuTitle="Finalizar Pedido" />
-      <h2>Produtos</h2>
-      { cartItens && cartItens.length === magicNumber
-        ? <h3>Não há produtos no carrinho</h3> : null }
-      { status ? <h3>Compra realizada com sucesso!</h3> : null}
-      <ul>
-        {cartItens
-          && cartItens.length > magicNumber
-          && cartItens.map(({ quantity, price, product }, i) => (
-            <li key={ product }>
-              <div key={ `${product}+${price}` }>
-                <span data-testid={ `${i}-product-qtd-input` }>{quantity}</span>
-                <span data-testid={ `${i}-product-name` }>{product}</span>
-                <span data-testid={ `${i}-product-total-value` }>
-                  {`R$ ${(price * quantity).toFixed(fixeNumber).replace('.', ',')}`}
-                </span>
-                <span
-                  data-testid={ `${i}-product-unit-price` }
-                >
-                  {`(R$ ${parseFloat(price).toFixed(fixeNumber).replace('.', ',')} un)`}
-                </span>
-                <button
-                  type="button"
-                  value={ product }
-                  onClick={ (e) => handleList(e.currentTarget.value) }
-                  data-testid={ `${i}-removal-button` }
-                >
-                  <BsTrash />
-                </button>
-              </div>
-            </li>
-          ))}
-      </ul>
-      <p data-testid="order-total-value">{`Total: R$ ${total}`}</p>
-      <h2>Endereço</h2>
-      <form>
-        <label htmlFor="rua">
-          Rua:
-          <input
-            name="rua"
-            type="text"
-            onChange={ (e) => setRua(e.target.value) }
-            data-testid="checkout-street-input"
-          />
-        </label>
-        <label htmlFor="numero">
-          Número da casa:
-          <input
-            name="numero"
-            type="text"
-            onChange={ (e) => setNumero(e.target.value) }
-            data-testid="checkout-house-number-input"
-          />
-        </label>
-        <button
-          type="button"
-          disabled={ !rua || !numero || total === magicNumber }
-          data-testid="checkout-finish-btn"
-          onClick={ () => registerSale() }
+      <Topbar menuTitle="Finalizar Pedido" typeOfUser="client" />
+      <Container component="main" maxWidth="sm">
+        {cartItens && cartItens.length === magicNumber && (
+          <Typography variant="h4">Não há produtos no carrinho</Typography>
+        )}
+        <Paper elevation={ 3 } className={ classes.paper }>
+          <Typography component="h2" variant="h5" className={ classes.title }>
+            Carrinho
+          </Typography>
+          <List>
+            {cartItens &&
+              cartItens.length > magicNumber &&
+              cartItens.map(({ quantity, price, product }, i) => (
+                <ListItem key={ product }>
+                  <ListItemIcon>
+                    <LabelIcon className={ classes.listIcon } />
+                  </ListItemIcon>
+                  <ListItemText
+                    key={ `${product}+${price}` }
+                    primary={ `${quantity} ${product} R$ ${(price * quantity)
+                      .toFixed(fixeNumber)
+                      .replace('.', ',')} ` }
+                    secondary={ `(R$ ${parseFloat(price)
+                      .toFixed(fixeNumber)
+                      .replace('.', ',')} un)` }
+                  />
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      edge="end"
+                      type="button"
+                      value={ product }
+                      onClick={ (e) => handleList(e.currentTarget.value) }
+                      data-testid={ `${i}-removal-button` }
+                      className={ classes.deleteIcon }
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))}
+            <ListItem>
+              <ListItemText primary="Total:" />
+              <Typography variant="subtitle1" className={ classes.total }>
+                {`R$ ${total}`}
+              </Typography>
+            </ListItem>
+          </List>
+        </Paper>
+        <Typography variant="h5" className={ classes.entregaTitle }>
+          Endereço de entrega:
+        </Typography>
+        <form className={ classes.form } noValidate>
+          <Grid container spacing={ 2 }>
+            <Grid item xs={ 12 } sm={ 10 }>
+              <TextField
+                label="Rua"
+                variant="outlined"
+                required
+                fullWidth
+                onChange={ (e) => setRua(e.target.value) }
+              />
+            </Grid>
+            <Grid item xs={12} sm={2}>
+              <TextField
+                label="Nº"
+                variant="outlined"
+                required
+                fullWidth
+                onChange={ (e) => setNumero(e.target.value) }
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                type="button"
+                fullWidth
+                variant="contained"
+                color="primary"
+                disabled={ !rua || !numero || total === magicNumber }
+                data-testid="checkout-finish-btn"
+                onClick={ () => registerSale() }
+              >
+                Finalizar pedido
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </Container>
+      <Snackbar
+        open={ status }
+        autoHideDuration={ 6000 }
+        onClose={ () => setStatus(false) }
+        className={ classes.alert }
+      >
+        <Alert
+          onClose={ () => setStatus(false) }
+          severity="success"
+          className={ classes.alert }
         >
-          Finalizar pedido
-        </button>
-      </form>
+          Compra registrada com sucesso!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
 
 export default connect()(Checkout);
-
-/* {
-  cart: [
-    {
-      quantity: 1,
-      price: '2.19',
-      product: 'Skol 269ml'
-    },
-    {
-      quantity: 1,
-      price: '4.49',
-      product: 'Skol Beats Senses 313ml'
-    }
-  ]
-} */
