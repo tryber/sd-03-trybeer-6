@@ -1,6 +1,43 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+import {
+  Container,
+  Grid,
+  Typography,
+  Button,
+  TextField,
+  Snackbar,
+  Avatar,
+  Checkbox,
+  FormControlLabel,
+} from '@material-ui/core';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Alert from '../../utils/Alert';
 import NewRegisterUser from '../../utils/axios/register/RegisterUser';
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  alert: {
+    width: '95%',
+  },
+}));
 
 export default function Register() {
   const [name, setName] = useState(null);
@@ -10,9 +47,10 @@ export default function Register() {
   const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
   const [nameError, setNameError] = useState(null);
-  const [registerError, setRegisterError] = useState(null);
+  const [open, setOpen] = useState(false);
   const history = useHistory();
   const mgNumber = 6;
+  const classes = useStyles();
 
   const registerUser = async () => {
     let role = 'client';
@@ -22,8 +60,12 @@ export default function Register() {
 
     localStorage.setItem('token', 'aiusdhdsjsdkjdskj');
 
-    if (registerAnsw === statusErr) return setRegisterError(registerAnsw);
-    if (registerAnsw.user.role === 'administrator') return history.push('/admin/orders');
+    if (registerAnsw === statusErr) return setOpen(true);
+
+    if (registerAnsw.user.role === 'administrator') {
+      return history.push('/admin/orders');
+    }
+
     return history.push('/products');
   };
 
@@ -31,6 +73,9 @@ export default function Register() {
     const {
       target: { value: typedEmail },
     } = e;
+
+    if (!typedEmail) return null;
+
     //* Regex de e-mail
     const validator = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
     if (!validator.test(typedEmail)) {
@@ -45,6 +90,8 @@ export default function Register() {
     const {
       target: { value: typedPassword },
     } = e;
+
+    if (!typedPassword) return null;
 
     //* Regra do Eslint de armazenar números em variáveis para comparar.
     const magicNumber = 6;
@@ -64,6 +111,8 @@ export default function Register() {
     const nameRegex = /[\^$.|?*@+()#!%¨&0-9]/;
     const magicNumber = 12;
 
+    if (!typedName) return null;
+
     if (nameRegex.test(typedName) || typedName.length < magicNumber) {
       return setNameError(
         'Você digitou um caracter especial ou número no nome ou digitou um nome menor que 12 letras.',
@@ -74,68 +123,112 @@ export default function Register() {
     return (setNameError(null), setName(typedName));
   };
 
+  const handleClose = () => setOpen(false);
+
   return (
-    <div>
-      <h1>Tela de cadastro de usuário</h1>
-      <div>{registerError ? <p>E-mail already in database.</p> : null}</div>
-      <form>
-        <label htmlFor="name">
-          Nome
-          <input
-            type="text"
-            name="name"
-            data-testid="signup-name"
-            onBlur={ (e) => nameValidator(e) }
-          />
-          {nameError ? <p data-testid="nomeError">{nameError}</p> : null}
-        </label>
-        <label htmlFor="email">
-          Email
-          <input
-            type="text"
-            name="email"
-            data-testid="signup-email"
-            onBlur={ (e) => emailValidator(e) }
-          />
-          {emailError ? <p>{emailError}</p> : null}
-        </label>
-        <label htmlFor="senha">
-          Password
-          <input
-            type="password"
-            name="senha"
-            data-testid="signup-password"
-            onBlur={ (e) => passwordValidator(e) }
-            onChange={ (e) => setPassword(e.target.value) }
-          />
-          {passwordError ? <p>{passwordError}</p> : null}
-        </label>
-        <label htmlFor="seller">
-          Quero Vender
-          <input
-            type="checkbox"
-            name="seller"
-            data-testid="signup-seller"
-            onChange={ () => setIsAdmin(!isAdmin) }
-          />
-        </label>
-        <button
-          type="button"
-          data-testid="signup-btn"
-          disabled={
-            !name
-            || !email
-            || !password
-            || emailError
-            || passwordError
-            || nameError
-            || password.length < mgNumber
-          }
-          onClick={ registerUser }
+    <Container component="main" maxWidth="xs">
+      <div className={ classes.paper }>
+        <Snackbar
+          open={ open }
+          autoHideDuration={ 6000 }
+          onClose={ handleClose }
+          className={ classes.alert }
         >
-          Cadastrar
-        </button>
-      </form>
-    </div>
+          <Alert
+            onClose={ handleClose }
+            severity="error"
+            className={ classes.alert }
+          >
+            O e-mail informado já está cadastrado!
+          </Alert>
+        </Snackbar>
+        <Avatar className={ classes.avatar }>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Cadastre-se
+        </Typography>
+        <form className={ classes.form } noValidate>
+          <Grid container spacing={ 2 }>
+            <Grid item xs={ 12 }>
+              <TextField
+                data-testid="signup-name"
+                name="name"
+                variant="outlined"
+                required
+                fullWidth
+                id="name"
+                label="Nome"
+                autoFocus
+                error={ nameError }
+                helperText={ nameError }
+                onBlur={ (e) => nameValidator(e) }
+              />
+            </Grid>
+            <Grid item xs={ 12 }>
+              <TextField
+                data-testid="signup-email"
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Email"
+                name="email"
+                error={ emailError }
+                helperText={ emailError }
+                onBlur={ (e) => emailValidator(e) }
+              />
+            </Grid>
+            <Grid item xs={ 12 }>
+              <TextField
+                data-testid="signup-password"
+                variant="outlined"
+                required
+                fullWidth
+                name="senha"
+                label="Password"
+                type="password"
+                error={ passwordError }
+                helperText={ passwordError }
+                onBlur={ (e) => passwordValidator(e) }
+                onChange={ (e) => setPassword(e.target.value) }
+              />
+            </Grid>
+            <Grid item xs={ 12 }>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    data-testid="signup-seller"
+                    color="primary"
+                    onChange={ () => setIsAdmin(!isAdmin) }
+                  />
+                }
+                label="Quero Vender"
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="button"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={ classes.submit }
+            onClick={ registerUser }
+            data-testid="signup-btn"
+            disabled={
+              !name
+              || !email
+              || !password
+              || emailError
+              || passwordError
+              || nameError
+              || password.length < mgNumber
+            }
+          >
+            Cadastrar
+          </Button>
+        </form>
+      </div>
+    </Container>
   );
 }

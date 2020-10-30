@@ -6,7 +6,7 @@ import { Login, Products, AdminProfile } from './pages';
 import AdminSideBar from './components/adminSideBar/adminSideBar';
 import Register from './components/register/Register';
 import Profile from './components/profile/Profile';
-
+import Checkout from './components/checkout/Checkout';
 import store from './store';
 
 const App = () => (
@@ -16,6 +16,7 @@ const App = () => (
         <Route path="/login" component={ Login } />
         <Route path="/register" component={ Register } />
         <Route path="/products" component={ Products } />
+        <Route path="/checkout" component={ Checkout } />
         <Route path="/orders" component={ () => <div>Orders Page</div> } />
         <Route path="/profile" component={ Profile } />
         <Route path="/admin/orders">

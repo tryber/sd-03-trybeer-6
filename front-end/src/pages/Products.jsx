@@ -8,12 +8,12 @@ const Products = () => {
 
   if (token) return (
     <div>
-      <Topbar menuTitle="TryBeer" />
+      <Topbar menuTitle="TryBeer" typeOfUser="client" />
       <ProductsItens />
     </div>
   );
 
-  return <Redirect to="/login" />
+  return <Redirect to="/login" />;
 };
 
 export default Products;
