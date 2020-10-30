@@ -128,8 +128,7 @@ function Checkout() {
             Carrinho
           </Typography>
           <List>
-            {cartItens &&
-              cartItens.length > magicNumber &&
+            {cartItens && cartItens.length > magicNumber &&
               cartItens.map(({ quantity, price, product }, i) => (
                 <ListItem key={ product }>
                   <ListItemIcon>
@@ -180,7 +179,7 @@ function Checkout() {
                 onChange={ (e) => setRua(e.target.value) }
               />
             </Grid>
-            <Grid item xs={12} sm={2}>
+            <Grid item xs={ 12 } sm={ 2 }>
               <TextField
                 label="Nº"
                 variant="outlined"
@@ -189,7 +188,7 @@ function Checkout() {
                 onChange={ (e) => setNumero(e.target.value) }
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={ 12 }>
               <Button
                 type="button"
                 fullWidth
