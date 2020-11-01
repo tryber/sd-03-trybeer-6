@@ -8,6 +8,9 @@ import Register from './components/register/Register';
 import Profile from './components/profile/Profile';
 import Checkout from './components/checkout/Checkout';
 import store from './store';
+import SaleDetails from './pages/SaleDetails';
+import Sales from './pages/Sales';
+import PrivateRoute from './components/privateRoute/PrivateRoute';
 
 const App = () => (
   <Provider store={ store }>
@@ -17,8 +20,11 @@ const App = () => (
         <Route path="/register" component={ Register } />
         <Route path="/products" component={ Products } />
         <Route path="/checkout" component={ Checkout } />
-        <Route path="/orders" component={ () => <div>Orders Page</div> } />
         <Route path="/profile" component={ Profile } />
+        <PrivateRoute path="/orders/:id">
+          <SaleDetails />
+        </PrivateRoute>
+        <Route path="/orders" component={ Sales } />
         <Route path="/admin/orders">
           <AdminSideBar menuTitle="TryBeer" />
         </Route>

@@ -8,7 +8,7 @@ const isValidParams = (email, password) => {
 
   const minLengthPassword = 6;
 
-  return emailValidation && password.length >= minLengthPassword ? false : true;
+  return !(emailValidation && password.length >= minLengthPassword);
 };
 
 const loginRequest = async (email, password, message, history) => {
@@ -18,7 +18,6 @@ const loginRequest = async (email, password, message, history) => {
       password,
     });
 
-    console.log(loginResponse);
     const { data: { token, user } } = loginResponse;
 
     localStorage.clear();
@@ -34,23 +33,23 @@ const loginRequest = async (email, password, message, history) => {
 };
 
 const InputTypes = ({ type, handleChanger }) => (
-  <div className={`Input${type}`}>
+  <div className={ `Input${type}` }>
     <div>
-      <label htmlFor={type}>{type}</label>
+      <label htmlFor={ type }>{type}</label>
     </div>
     <div>
       <input
-        type={type === 'Email' ? 'text' : 'password'}
-        name={type}
-        data-testid={type === 'Email' ? "email-input" : "password-input"} 
-        onChange={({ target: { value } }) => handleChanger(value)}
-        placeholder={type}
+        type={ type === 'Email' ? 'text' : 'password' }
+        name={ type }
+        data-testid={ type === 'Email' ? 'email-input' : 'password-input' }
+        onChange={ ({ target: { value } }) => handleChanger(value) }
+        placeholder={ type }
       />
     </div>
   </div>
 );
 
-export default function InputLogin () {
+export default function InputLogin() {
   const [email, emailHandler] = useState(null);
   const [password, passwordHandler] = useState('');
   const [message, messageHandler] = useState(null);
@@ -60,13 +59,13 @@ export default function InputLogin () {
     <section className="MainLogin">
       <h1>Login</h1>
       {message && <span>{message}</span>}
-      <InputTypes type="Email" handleChanger={emailHandler} />
-      <InputTypes type="Password" handleChanger={passwordHandler} />
+      <InputTypes type="Email" handleChanger={ emailHandler } />
+      <InputTypes type="Password" handleChanger={ passwordHandler } />
       <div>
         <button
-          disabled={isValidParams(email, password)}
+          disabled={ isValidParams(email, password) }
           data-testid="signin-btn"
-          onClick={() => loginRequest(email, password, messageHandler, history)}
+          onClick={ () => loginRequest(email, password, messageHandler, history) }
         >
           ENTRAR
         </button>
@@ -78,4 +77,4 @@ export default function InputLogin () {
       </div>
     </section>
   );
-};
+}

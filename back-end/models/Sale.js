@@ -1,5 +1,8 @@
+const moment = require('moment');
 const utils = require('../services/utils');
 const serializers = require('../services/serializers');
+
+const Products = require('./Product');
 
 const connection = require('./connection');
 
@@ -20,7 +23,7 @@ class Sale {
     totalPrice,
     deliveryAddress,
     deliveryNumber,
-    saleDate = Date.now(),
+    saleDate = moment(),
     status = 'pending',
     products = {},
   }) {
@@ -60,10 +63,12 @@ class Sale {
     const newid = newSale.getAutoIncrementValue();
 
     const saleProductionRelation = await db.getTable('sales_products');
-    Object.entries(this.products).forEach(async ([productId, qty]) => {
+    this.products.forEach(async ({ quantity, _price, product }) => {
+      const productId = (await Products.getIdWithName(product))[0];
+      console.log('productId', productId);
       await saleProductionRelation
         .insert(['sale_id', 'product_id', 'quantity'])
-        .values(newid, productId, qty)
+        .values(newid, productId, quantity)
         .execute();
     });
 

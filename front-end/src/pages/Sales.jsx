@@ -12,24 +12,32 @@ async function getId() {
   });
   return userData.data.id;
 }
-
 async function getSales() {
   const id = await getId();
   return axios.get(GET_USER_SALES(id)).then(({ data }) => data);
 }
 
 export default function Sales() {
-  const [sales, setSales] = useState([false]);
+  const [sales, setSales] = useState([]);
   const history = useHistory();
-  useEffect(() => (localStorage.getItem('token')
-    ? getSales().then(setSales) : history.push('/')), [history]);
+  // useEffect(() => (localStorage.getItem('token')
+  //   ? getSales().then(setSales) : history.push('/')), [history]);
 
-  return (
+  useEffect(() => {
+    // if (localStorage.getItem('token')) {
+    getSales().then(setSales);
+    // }
+    // return history.push('/');
+  }, [history]);
+
+  return sales.length ? (
     <div>
       <h1 data-testid="top-title">Meus Pedidos:</h1>
       {sales.map(({ id, saleDate, totalPrice }) => (
-        <SaleCard key={ id } id={ id } date={ saleDate } total={ totalPrice } />
+        <SaleCard key={ id } id={ id - 1 } date={ saleDate } total={ totalPrice } />
       ))}
     </div>
+  ) : (
+    <p>Loading</p>
   );
 }

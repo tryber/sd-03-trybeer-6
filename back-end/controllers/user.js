@@ -38,7 +38,9 @@ async function getUser(req, res, next) {
 async function getUserByToken(req, res, _next) {
   const { authorization: token } = req.headers;
   const userInfo = await services.user.decodeToken(token);
+  // console.log(userInfo);
   const user = await services.user.getUser(userInfo.email);
+  // console.log(user);
   return res.status(200).json(user);
 }
 

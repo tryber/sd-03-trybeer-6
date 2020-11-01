@@ -3,26 +3,26 @@ import React from 'react';
 
 const maxFloatNumbers = 2;
 
-export default function Productcard({ id, qty, product }) {
+export default function ProductCard({ id, qty, product }) {
   return (
     <div>
-      <p data-testid={ `${id}-product-name` }>
+      <p data-testid={ `${id - 1}-product-name` }>
         {product.name}
       </p>
 
-      <p data-testid={ `${id}-product-qtd` }>
+      <p data-testid={ `${id - 1}-product-qtd` }>
         x
         {qty}
       </p>
 
-      <p data-testid={ `${id}-product-total-value` }>
-        {(+qty * parseFloat(product.price)).toFixed(maxFloatNumbers)}
+      <p data-testid={ `${id - 1}-product-total-value` }>
+        {`R$ ${(+qty * parseFloat(product.price)).toFixed(maxFloatNumbers).split('.').join(',')}`}
       </p>
     </div>
   );
 }
 
-Productcard.propTypes = {
+ProductCard.propTypes = {
   id: PropTypes.number.isRequired,
   product: PropTypes.shape({
     name: PropTypes.string,

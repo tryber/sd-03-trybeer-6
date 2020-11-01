@@ -2,6 +2,7 @@ const Sale = require('../models/Sale');
 
 async function createSale(saleData) {
   const sale = new Sale(saleData);
+  console.log('SALE', sale);
   return sale.save();
 }
 

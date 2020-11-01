@@ -7,11 +7,18 @@ import Topbar from '../topbar/Topbar';
 import getUserByToken from '../../utils/axios/profile/GetDataByToken';
 import RegisterSale from '../../utils/axios/checkout/RegisterSale';
 
+function wait(ms) {
+  const past = Date.now();
+  while (Date.now() - past < ms) {
+    // donothing
+  }
+}
+
 function Checkout() {
   const history = useHistory();
   const magicNumber = 0;
   const fixeNumber = 2;
-  const timeOut = 5000;
+  const timeOut = 2000;
   const [cartItens, setCartItens] = useState();
   const [total, setTotal] = useState(magicNumber);
   const [rua, setRua] = useState(null);
@@ -19,17 +26,23 @@ function Checkout() {
   const [status, setStatus] = useState(false);
 
   const registerSale = async () => {
-    const user = await getUserByToken(JSON.parse(localStorage.getItem('token')));
+    const user = await getUserByToken(
+      JSON.parse(localStorage.getItem('token')),
+    );
     const totalPrice = parseFloat(total).toFixed(fixeNumber);
-    const sale = await RegisterSale(user.id, totalPrice, rua, numero);
+    const sale = await RegisterSale(user.id, totalPrice, rua, numero, cartItens);
 
-    if (sale.id) {
-      setStatus(true);
-      setTimeout(() => {
+    // if (sale.id) {
+    setStatus(true);
+    // localStorage.removeItem('cartItens');
+    // history.push('/products');
+    setTimeout(() => {
+      if (history.location.pathname === '/checkout') {
         localStorage.removeItem('cartItens');
         history.push('/products');
-      }, timeOut);
-    }
+      }
+    }, timeOut);
+    // }
   };
 
   const calcList = (itens) => {
@@ -55,13 +68,15 @@ function Checkout() {
     return calcList(JSON.parse(localStorage.getItem('cartItens')));
   }, [history]);
 
+  console.log('cartItens', cartItens);
   return (
     <div>
       <Topbar menuTitle="Finalizar Pedido" />
       <h2>Produtos</h2>
-      { cartItens && cartItens.length === magicNumber
-        ? <h3>Não há produtos no carrinho</h3> : null }
-      { status ? <h3>Compra realizada com sucesso!</h3> : null}
+      {cartItens && cartItens.length === magicNumber ? (
+        <h3>Não há produtos no carrinho</h3>
+      ) : null}
+      {status ? <h3>Compra realizada com sucesso!</h3> : null}
       <ul>
         {cartItens
           && cartItens.length > magicNumber
@@ -71,12 +86,14 @@ function Checkout() {
                 <span data-testid={ `${i}-product-qtd-input` }>{quantity}</span>
                 <span data-testid={ `${i}-product-name` }>{product}</span>
                 <span data-testid={ `${i}-product-total-value` }>
-                  {`R$ ${(price * quantity).toFixed(fixeNumber).replace('.', ',')}`}
+                  {`R$ ${(price * quantity)
+                    .toFixed(fixeNumber)
+                    .replace('.', ',')}`}
                 </span>
-                <span
-                  data-testid={ `${i}-product-unit-price` }
-                >
-                  {`(R$ ${parseFloat(price).toFixed(fixeNumber).replace('.', ',')} un)`}
+                <span data-testid={ `${i}-product-unit-price` }>
+                  {`(R$ ${parseFloat(price)
+                    .toFixed(fixeNumber)
+                    .replace('.', ',')} un)`}
                 </span>
                 <button
                   type="button"
