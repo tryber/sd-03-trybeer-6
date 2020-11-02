@@ -2,8 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { productsHandler } from '../../actions';
 
-const findProduct = (products, name) =>
-  products.findIndex((product) => product.product === name);
+const findProduct = (products, name) => products.findIndex((product) => product.product === name);
 
 const productAdd = (product, cart, price, total, callback) => {
   const productIndex = findProduct(cart, product);
@@ -48,47 +47,44 @@ const ProductCard = ({
 }) => {
   const cartStorage = JSON.parse(localStorage.getItem('cartItens')) || cart;
 
-  const totalCart =
-    Number(JSON.parse(localStorage.getItem('totalCart'))) || total;
+  const totalCart = Number(JSON.parse(localStorage.getItem('totalCart'))) || total;
 
   const productIndex = findProduct(cartStorage, name);
 
   return (
     <div>
-      <h4 data-testid={`${index}-product-name`}>{name}</h4>
-      <img src={thumbnail} alt={name} data-testid={`${index}-product-img`} />
-      <h3 data-testid={`${index}-product-price`}>
-        R$ {parseFloat(price).toFixed(2).replace('.', ',')}
+      <h4 data-testid={ `${index}-product-name` }>{name}</h4>
+      <img src={ thumbnail } alt={ name } data-testid={ `${index}-product-img` } />
+      <h3 data-testid={ `${index}-product-price` }>
+        R$
+        {' '}
+        {parseFloat(price).toFixed(2).replace('.', ',')}
       </h3>
       <button
         type="button"
-        data-testid={`${index}-product-minus`}
-        onClick={() =>
-          productRemove(
-            name,
-            cartStorage,
-            totalCart - Number(price),
-            productHandler,
-          )
-        }
+        data-testid={ `${index}-product-minus` }
+        onClick={ () => productRemove(
+          name,
+          cartStorage,
+          totalCart - Number(price),
+          productHandler,
+        ) }
       >
         -
       </button>
-      <span data-testid={`${index}-product-qtd`}>
+      <span data-testid={ `${index}-product-qtd` }>
         {productIndex !== -1 ? cartStorage[productIndex].quantity : 0}
       </span>
       <button
         type="button"
-        data-testid={`${index}-product-plus`}
-        onClick={() =>
-          productAdd(
-            name,
-            cartStorage,
-            price,
-            totalCart + Number(price),
-            productHandler,
-          )
-        }
+        data-testid={ `${index}-product-plus` }
+        onClick={ () => productAdd(
+          name,
+          cartStorage,
+          price,
+          totalCart + Number(price),
+          productHandler,
+        ) }
       >
         +
       </button>
