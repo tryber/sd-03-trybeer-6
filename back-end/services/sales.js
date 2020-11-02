@@ -1,6 +1,7 @@
 const Sale = require('../models/Sale');
 
 async function createSale(saleData) {
+  console.log('saleData', saleData);
   const sale = new Sale(saleData);
   console.log('SALE', sale);
   return sale.save();
@@ -8,6 +9,7 @@ async function createSale(saleData) {
 
 async function getSales() {
   const sales = await Sale.getAllSales();
+
   return sales;
 }
 

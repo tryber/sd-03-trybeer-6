@@ -11,6 +11,7 @@ import store from './store';
 import SaleDetails from './pages/SaleDetails';
 import Sales from './pages/Sales';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
+import AdminOrders from './pages/AdminOrders';
 
 const App = () => (
   <Provider store={ store }>
@@ -26,6 +27,7 @@ const App = () => (
         </PrivateRoute>
         <Route path="/orders" component={ Sales } />
         <Route path="/admin/orders">
+          <AdminOrders />
           <AdminSideBar menuTitle="TryBeer" />
         </Route>
         <Route path="/admin/profile" component={ AdminProfile } />

@@ -9,6 +9,7 @@ async function regiterSale(req, res) {
 
 async function getAllSales(_req, res) {
   const sales = await getSales();
+  console.log('sales', sales);
   return res.status(200).json(sales);
 }
 

@@ -24,7 +24,7 @@ class Sale {
     deliveryAddress,
     deliveryNumber,
     saleDate = moment(),
-    status = 'pending',
+    status = 'Pendente',
     products = {},
   }) {
     this.id = id;
@@ -93,7 +93,6 @@ class Sale {
 
     const productsTable = await db.getTable('products');
     const products = (await productsTable.select().execute()).fetchAll();
-
     return sales
       .map(
         ([
