@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import AdminOrder from '../adminOrders/AdminOrder';
+import AdminOrder from '../components/adminOrders/AdminOrder';
 
 const ENDPOINT = 'http://localhost:3001/sales';
 
@@ -12,7 +12,6 @@ async function getData() {
 export default function AdminOrders() {
   const [data, setData] = useState([]);
   const isLoaded = !!data.length;
-  console.log(data);
   useEffect(() => {
     getData().then(setData);
   }, []);

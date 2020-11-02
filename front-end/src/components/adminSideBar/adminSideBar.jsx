@@ -30,7 +30,7 @@ export default function AdminSideBar(props) {
           </div>
         </div>
       </div>
-      <div className={ menuOpen ? 'menu-open admin-side-bar-container' : 'menu-open' }>
+      <div className={ menuOpen ? 'adm-menu-open admin-side-bar-container' : 'adm-menu-open' }>
         <ul className="menu-ul">
           <Link to="/admin/orders" className="links">
             <li className="menu-li" data-testid="side-menu-item-orders">
@@ -46,7 +46,7 @@ export default function AdminSideBar(props) {
             <li
               className="menu-li"
               data-testid="side-menu-item-logout"
-              onClick={() => localStorage.clear()}
+              onClick={ () => localStorage.clear() }
             >
               Sair
             </li>

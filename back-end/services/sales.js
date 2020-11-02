@@ -1,10 +1,13 @@
 const Sale = require('../models/Sale');
 
 async function createSale(saleData) {
-  console.log('saleData', saleData);
   const sale = new Sale(saleData);
-  console.log('SALE', sale);
   return sale.save();
+}
+
+async function deliverySale(id) {
+  const sale = Sale.updateSale(id);
+  return sale;
 }
 
 async function getSales() {
@@ -23,4 +26,4 @@ async function getById(id) {
   return sales;
 }
 
-module.exports = { createSale, getSales, salesByUser, getById };
+module.exports = { createSale, getSales, salesByUser, getById, deliverySale };

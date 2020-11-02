@@ -127,6 +127,19 @@ class Sale {
 
     return sales.find(({ id }) => id === +saleId);
   }
+
+  static async updateSale(saleId) {
+    const db = await connection();
+    const sales = await db.getTable('sales');
+
+    const savedSale = await sales.update()
+      .set('status', 'Entregue')
+      .where('id = :id')
+      .bind('id', saleId)
+      .execute();
+
+    return savedSale;
+  }
 }
 
 module.exports = Sale;

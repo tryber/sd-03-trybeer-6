@@ -29,7 +29,6 @@ function Checkout() {
     const user = await getUserByToken(
       JSON.parse(localStorage.getItem('token')),
     );
-    // console.log('total', total);
     // const totalPrice = parseFloat(total).toFixed(fixeNumber);
     const totalPrice = +(total.split(',').join('.'));
 

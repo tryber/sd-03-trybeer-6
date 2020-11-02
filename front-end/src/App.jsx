@@ -12,6 +12,7 @@ import SaleDetails from './pages/SaleDetails';
 import Sales from './pages/Sales';
 import PrivateRoute from './components/privateRoute/PrivateRoute';
 import AdminOrders from './pages/AdminOrders';
+import AdminOrderDetail from './components/adminOrderDetails/AdminOrderDetail';
 
 const App = () => (
   <Provider store={ store }>
@@ -25,10 +26,15 @@ const App = () => (
         <PrivateRoute path="/orders/:id">
           <SaleDetails />
         </PrivateRoute>
+        <PrivateRoute path="/admin/orders/:id">
+          <AdminSideBar menuTitle="TryBeer" />
+          <AdminOrderDetail />
+
+        </PrivateRoute>
         <Route path="/orders" component={ Sales } />
         <Route path="/admin/orders">
-          <AdminOrders />
           <AdminSideBar menuTitle="TryBeer" />
+          <AdminOrders />
         </Route>
         <Route path="/admin/profile" component={ AdminProfile } />
         <Route exact path="/" component={ Login } />
