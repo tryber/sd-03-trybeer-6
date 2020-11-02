@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 export default function SaleCard({ id, date, total }) {
   const history = useHistory();
+  const maxFloatNumbers = 2;
   function goToDetails() {
     return history.push(`/orders/${id + 1}`);
   }
@@ -16,7 +17,7 @@ export default function SaleCard({ id, date, total }) {
           {`Pedido ${id + 1}`}
         </p>
         <p data-testid={ `${id}-order-date` }>{moment(date).format('DD/MM')}</p>
-        <p data-testid={ `${id}-order-total-value` }>{`R$: ${total}`}</p>
+        <p data-testid={ `${id}-order-total-value` }>{`R$ ${(parseFloat(total)).toFixed(maxFloatNumbers).split('.').join(',')}`}</p>
       </div>
     </button>
   );

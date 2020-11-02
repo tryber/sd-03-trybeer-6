@@ -31,7 +31,7 @@ const App = () => (
           <AdminOrderDetail />
 
         </PrivateRoute>
-        <Route path="/orders" component={ Sales } />
+        <PrivateRoute path="/orders" component={ Sales } />
         <Route path="/admin/orders">
           <AdminSideBar menuTitle="TryBeer" />
           <AdminOrders />
