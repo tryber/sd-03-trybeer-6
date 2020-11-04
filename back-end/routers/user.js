@@ -11,4 +11,6 @@ router.patch('/:id', auth.authToken, Controllers.users.updateUser);
 
 router.post('/create', Controllers.users.createUser);
 
+router.get('/:id/sales', Controllers.users.getSales);
+
 module.exports = router;

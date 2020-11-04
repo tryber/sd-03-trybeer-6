@@ -13,7 +13,7 @@ const Products = () => {
     </div>
   );
 
-  return <Redirect to="/login" />
+  return <Redirect to="/login" />;
 };
 
 export default Products;

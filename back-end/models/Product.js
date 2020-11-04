@@ -17,6 +17,20 @@ class Product {
       ([id, name, price, thumbnail]) => new Product({ id, name, price, thumbnail }),
     );
   }
+
+  static async getIdWithName(productName) {
+    const db = await connection();
+    const productsTable = await db.getTable('products');
+    const products = await productsTable.select().execute();
+    return products.fetchAll().find(
+      ([id, name, price, thumbnail]) => {
+        if (name === productName) {
+          return new Product({ id, name, price, thumbnail });
+        }
+        return false;
+      },
+    );
+  }
 }
 
 module.exports = Product;
